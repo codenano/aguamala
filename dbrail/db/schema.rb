@@ -16,6 +16,13 @@ ActiveRecord::Schema.define(version: 20140205041439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "signos", primary_key: "idx", force: true do |t|
+    t.string   "msg",  limit: 250
+    t.datetime "date",             default: '2014-02-06 13:05:47', null: false
+    t.binary   "pic"
+    t.string   "room", limit: 30
+  end
+
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "pw"

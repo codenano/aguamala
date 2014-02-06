@@ -24,7 +24,6 @@ angular.module('h2o.controllers', []).
       	            _.each(data.menu, function(value){
                      var li = document.createElement('li');
                      var link = document.createElement('a');
-                     //link.className = 'menu-item';  
                      if (value.url === $location.path())
                         li.className = 'active';                                
                      link.innerHTML = value.name.toUpperCase();
@@ -38,52 +37,43 @@ angular.module('h2o.controllers', []).
                      $scope.menuList.appendChild(li);
                      });
                    switch($location.path()) {
-                     case '/signup':
-                        $scope.user_signin_modal = document.getElementById('myModal');
-                        $scope.user_signin_modal_lauch = document.getElementById('user_signin_modal_launch');                       
+                     case '/signup':                       
                         $scope.user_signup = document.getElementById('user_signup');
                         $scope.user_email = document.getElementById('user_email');
-                        $scope.pw = document.getElementById('pw');
+                        $scope.pw = document.getElementById('psw');
                         $scope.user_signup_action = function(){
-                           console.log($scope.user_email.value.toString()+''+$scope.pw.value.toString());
+                           console.log('rabbit in the hole');
                          	 var user_data = {
                          		  email: $scope.user_email.value,
-                         		  password: $scope.pw.value,
-                         		  type: 'sign_up'
+                         		  pw: $scope.pw.value,
+                         		  type: 'signUp'
                          	    };
-                           $scope.ws.send(JSON.stringify(user_data));       
+                           $scope.ws.send(JSON.stringify(user_data)); 
                            };
                         $scope.signUp = function() {
-                           console.log('dsf');
-                           if (($scope.pw.value.toString().length < 8)&&($scope.user_email.value.toString() != ''))
-                              console.log('inxsess');
-                           else
-                              $scope.user_signup_action();
+                           console.log($scope.user_email.value+''+$scope.user_email.value.length);
+                           if (($scope.pw.value.length < 8)||(($scope.user_email.value.length < 6)||($scope.user_email.value=='')||($scope.user_email.value==null)))
+                              {
+                              var dl = document.getElementById('modalDialogLabel');
+                              dl.innerHTML = 'Eso no se hace...';
+                              dl.style.color = '#000';
+                              $('#modalDialog').on('hidden.bs.modal', function () {
+                                if ($scope.pw.value.length < 8)
+                                   {
+                                    $scope.pw.focus();   
+                                   }                                 
+                              });
+                              $('#modalDialog').modal('show');
+                              }
+                              else
+                                 {
+                                 $scope.user_signup_action();
+                                 }
                            }; 
                         $scope.user_email.focus();
-                             $scope.user_signin_modal_lauch.addEventListener('click' ,function(e){
-                                $('#myModal').modal('show');
-                              }); 
                      break;
                      case '/signin':
-                        $scope.user_signup = document.getElementById('user_signup');
-                        $scope.user_email = document.getElementById('user_email');
-                        $scope.user_password = document.getElementById('user_password');
-                        $scope.user_password_repeat = document.getElementById('user_password_repeat');
-                        $scope.user_signin_modal = document.getElementById('myModal');
-                        $scope.user_signin_modal_lauch = document.getElementById('user_signin_modal_launch');      
-                        $scope.user_signup.addEventListener('click' ,function(e){
-                          console.log($scope.user_email.value+$scope.user_password.value+$scope.user_password_repeat.value);
-                        	var user_data = {
-                        		  email: $scope.user_email.value,
-                        		  password: $scope.user_password.value,
-                        		  type: 'sign_up'
-                        	 };
-                          $scope.ws.send(JSON.stringify(user_data));       
-                          });
-                        $scope.user_signin_modal_lauch.addEventListener('click' ,function(e){
-                          $('#myModal').modal('show');
-                          });
+                        $('#modalDialog').modal('show');
                      break;
                      case '/blog':
                        
