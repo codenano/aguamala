@@ -50,12 +50,12 @@ angular.module('h2o.controllers', []).
                            $scope.ws.send(JSON.stringify(user_data)); 
                            };
                         $scope.signUp = function() {
-                           console.log($scope.user_email.value+''+$scope.user_email.value.length);
                            if (($scope.pw.value.length < 8)||(($scope.user_email.value.length < 6)||($scope.user_email.value=='')||($scope.user_email.value==null)))
                               {
                               var dl = document.getElementById('modalDialogLabel');
-                              dl.innerHTML = 'Datos para registro';
-                              dl.style.color = '#000';
+                              var dlb = document.getElementById('modalDialogBody');
+                              dl.innerHTML = 'Llenar ambos datos';
+                              dlb.innerHTML = 'Para registrarte debes llenar tanto el campo de contaseña como el de email, con datos validos, la <b>contraseña</b> debe tener minimo <b>8 caracteres</b>, y el mail el formato de mail (usuario@dominio)';
                               $('#modalDialog').on('hidden.bs.modal', function () {
                                 if ($scope.pw.value.length < 8)
                                    {
@@ -78,12 +78,12 @@ angular.module('h2o.controllers', []).
                        
                      break;                     
                      default: 
-                       console.log($location.path());
+                       //console.log($location.path());
                      break;
                      }                     
     	          break;
     	        case 'sign_up':
-    	              console.log(data.response); 
+    	              //console.log(data.response); 
                     $scope.user_signup = document.getElementById('psw');
                     $scope.user_email = document.getElementById('user_email');  
                     $scope.user_signup.value = '';
@@ -218,7 +218,7 @@ angular.module('h2o.controllers', []).
       });
     };
     $scope.parseThread = function(msgs, callback) {
-    	console.log(msgs.threads.length);
+    	//console.log(msgs.threads.length);
     	if (msgs.threads.length>0) {
     	   msgs.threads.reverse();
     	   //console.log(msgs.threads);
