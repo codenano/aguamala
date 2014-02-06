@@ -42,7 +42,6 @@ angular.module('h2o.controllers', []).
                         $scope.user_email = document.getElementById('user_email');
                         $scope.pw = document.getElementById('psw');
                         $scope.user_signup_action = function(){
-                           console.log('rabbit in the hole');
                          	 var user_data = {
                          		  email: $scope.user_email.value,
                          		  pw: $scope.pw.value,
@@ -55,7 +54,7 @@ angular.module('h2o.controllers', []).
                            if (($scope.pw.value.length < 8)||(($scope.user_email.value.length < 6)||($scope.user_email.value=='')||($scope.user_email.value==null)))
                               {
                               var dl = document.getElementById('modalDialogLabel');
-                              dl.innerHTML = 'Eso no se hace...';
+                              dl.innerHTML = 'Datos para registro';
                               dl.style.color = '#000';
                               $('#modalDialog').on('hidden.bs.modal', function () {
                                 if ($scope.pw.value.length < 8)
@@ -85,6 +84,10 @@ angular.module('h2o.controllers', []).
     	          break;
     	        case 'sign_up':
     	              console.log(data.response); 
+                    $scope.user_signup = document.getElementById('psw');
+                    $scope.user_email = document.getElementById('user_email');  
+                    $scope.user_signup.value = '';
+                    $scope.user_email.value = '';
     	          break;        
     	        }  	  
           } 
