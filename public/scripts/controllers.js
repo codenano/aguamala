@@ -12,7 +12,7 @@ angular.module('h2o.controllers', []).
                               	
     $scope.init = function(){
     var host = window.document.location.host.replace(/:.*/, '');
-    $scope.ws = new WebSocket('ws://' + host +':1337');
+    $scope.ws = new WebSocket('ws://' + host +':1338');
     $scope.ws.onmessage = function (event) {
     	  var data = JSON.parse(event.data);
     	  if ((data)&&(data.type)){
