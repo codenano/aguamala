@@ -1,0 +1,10 @@
+  <div class="message-content">
+      <input name='message' ng-keyup="parsekey($event)" id='add-chat' class='input' maxlength='250' autocomplete='off' placeholder='Send a public message'/>
+      <input type='hidden' name='_csrf' value='#{csrf}'/>
+      <input type='hidden' name='fingerprint' id='fp'/>
+      <input type='hidden' name='userid' id='userid'/>
+  </div>  
+      <div id="add-chat-blocker" class="hidden">
+        <span>Cargando!...</span> 
+      </div>  
+  <div id=counter>250</div>

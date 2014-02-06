@@ -1,0 +1,41 @@
+doctype html
+html(ng-app='h2o')
+  head
+    title 
+    meta(content='width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0', name='viewport')
+    meta(content='yes', name='apple-mobile-web-app-capable')
+    meta(content='chrome=1', http-equiv='X-UA-Compatible')
+    base(href='/')
+    link(rel='shortcut icon', href='/images/favicon.png')   
+    link(rel='stylesheet', href='/scripts/lib/bootstrap-sass/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/scripts/css/app.css')
+
+    body
+     nav(class="navbar navbar-inverse navbar-fixed-top" role="navigation")
+       .container-fluid
+        .navbar-header
+          button(type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+            .sr-only 
+              Toggle navigation
+             span(class="icon-bar")
+          a(class="navbar-brand logoapp")
+        div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+          ul(id="menu_list" class="nav navbar-nav")
+    
+    .wrapper
+      block content
+
+    script(src='/scripts/lib/jquery/jquery.js')
+    script(src='/scripts/lib/underscore/underscore-min.js')
+    script(src='/scripts/lib/angular/angular.js')
+    script(src='/scripts/lib/angular-route/angular-route.js')
+    script(src='/scripts/lib/animated-gif/dist/Animated_GIF.min.js')
+    script(src='/scripts/lib/fingerprint/fingerprint.min.js')
+    script(src='/scripts/lib/gumhelper/gumhelper.js')
+    script(src='/scripts/lib/jquery-waypoints/waypoints.js')
+    script(src='/scripts/base/videoShooter/videoShooter.js')
+    script(src='/scripts/lib/bootstrap-sass/dist/js/bootstrap.min.js')
+    script(src='/scripts/directives.js')
+    script(src='/scripts/factories.js')
+    script(src='/scripts/controllers.js')
+    script(src='/scripts/app.js')

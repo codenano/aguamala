@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: aenima
+  pool: 5
+  username: b3n0n
+  password: imf1337
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: aenima
+  pool: 5
+  username: b3n0n
+  password: imf1337
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: aenima
+  pool: 5
+  username: b3n0n
+  password: imf1337
