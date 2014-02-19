@@ -1,5 +1,19 @@
 'use strict';
-
+/*  
+    git config remote.origin.url https://you:password@github.com/you/example.git
+    rails generate scaffold name attribute:type
+    perl nombrearchivo.pl -dns www.pagina.com
+    script(src='/scripts/lib/jquery/jquery.js')
+    script(src='/scripts/lib/underscore/underscore-min.js')
+    script(src='/scripts/lib/angular/angular.js')
+    script(src='/scripts/lib/angular-route/angular-route.js')
+    script(src='/scripts/lib/animated-gif/dist/Animated_GIF.min.js')
+    script(src='/scripts/lib/fingerprint/fingerprint.min.js')
+    script(src='/scripts/lib/gumhelper/gumhelper.js')
+    script(src='/scripts/lib/jquery-waypoints/waypoints.js')
+    script(src='/scripts/base/videoShooter/videoShooter.js')
+    script(src='/scripts/lib/bootstrap-sass/dist/js/bootstrap.min.js')
+*/
 angular.module('h2o', [
   'ngRoute',
   'h2o.factories',
@@ -7,7 +21,17 @@ angular.module('h2o', [
   'h2o.directives'
 ]).
 run(function ($rootScope, $http, $location) {
- $rootScope.app = 'h2o';
+  $rootScope.state = 'loading';
+  var host = window.location.hostname;
+  $rootScope.app = 'aguamala';
+  $rootScope.socket = new WebSocket('ws://' + host);       
+  $rootScope.socket.onopen = function (wss) {
+    var log = {
+  	    app: $rootScope.app,
+  	    type: 'start'
+  	    };
+    $rootScope.socket.send(JSON.stringify(log));	 
+    };  
 }).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider
@@ -48,7 +72,7 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/app.html'
     })    
     .when('/meat/:id', {
-      controller: 'meatCtrl',
+      controller: 'meatchat',
       templateUrl: 'partials/meat.html'
     })
     .otherwise({

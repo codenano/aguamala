@@ -1,6 +1,5 @@
 'use strict';
-
-module.exports = function (app, nconf, rooms, thread, _) {
+module.exports = function (app, h2o) {
   //dependencies
   app.get('/', function (req, res) {
     res.render('app');
@@ -31,15 +30,9 @@ module.exports = function (app, nconf, rooms, thread, _) {
       rooms: rooms
     });
   });
-  app.get('/api/data/dellitours', function (req, res) {
-    var menu = ['Paquetes', 'Excursiones', 'Hoteles', 'Transporte', 'Nosotros'];
-    res.json({
-      menu: menu
-    });
-  });  
   app.get('/api/signos/:room', function (req, res) {
-  	if (thread.db)
-    thread.getThread(req, function(err, threads){
+  	if (h2o.thread.db)
+    h2o.thread.getThread(req, function(err, threads){
     	if (err) {
     	  res.status(400);
         res.json({

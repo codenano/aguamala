@@ -14,21 +14,21 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
-  	"pg.js": "2.11.1",    
+  	"pg": "2.11.1",    
     "express": "3.4.8",
     "nconf": "0.6.9",
     "ws": "0.4.31",
     "underscore": "1.5.2",
     "jade": "0.35.0",
-    "client-sessions": "0.6.0",
+    "redis": "0.10.0",
+    "connect-redis": "1.4.6",
     "nodemailer": "0.6.0"
   },
   "devDependencies": {
     "nodemon": "1.0.9",
     "bower": ">= 1.2.7",
     "grunt": "~0.4.2",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt-contrib-uglify": "~0.2.2"
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-concat": "0.3.0"
   }
 }

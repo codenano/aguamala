@@ -1,0 +1,27 @@
+<h1>Listing h2omodules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @h2omodules.each do |h2omodule| %>
+      <tr>
+        <td><%= h2omodule.name %></td>
+        <td><%= link_to 'Show', h2omodule %></td>
+        <td><%= link_to 'Edit', edit_h2omodule_path(h2omodule) %></td>
+        <td><%= link_to 'Destroy', h2omodule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New H2omodule', new_h2omodule_path %>
