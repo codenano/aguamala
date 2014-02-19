@@ -13,16 +13,6 @@
     	}; 
     $rootScope.socket.send(JSON.stringify(log));	
     });
-    $scope.$on("$routeChangeSuccess", function(event, next, current) {
-              var log = {
-        	    room: $scope.roomId,
-        	    type: 'join'
-        	    };
-        	if ($rootScope.socket.readyState)    
-             $rootScope.socket.send(JSON.stringify(log));
-          else
-             setTimeout(function(){$rootScope.socket.send(JSON.stringify(log))}, 300)
-    });
     $(document).on('keydown', function (event) {
       if (event.keyCode === 27)
          if (($('.header').css('display'))==='block')
@@ -36,7 +26,14 @@
     $scope.fingerprint = new Fingerprint({ canvas: true }).get();
   		        $http.get('/api/signos/'+$scope.roomId).success(function(data) {
   		      	    $scope.parseThread(data, function(){
-  		      	    	console.log('done');
+                    var log = {
+        	              room: $scope.roomId,
+        	              type: 'join'
+        	              };
+        	          if ($rootScope.socket.readyState)    
+                       $rootScope.socket.send(JSON.stringify(log));
+                    else
+                       setTimeout(function(){$rootScope.socket.send(JSON.stringify(log))}, 600)
   		      	    	setTimeout(function(){
   		      	    		  $scope.canSend = true;
   		      	    	    $('#add-chat').prop('readonly', false);
