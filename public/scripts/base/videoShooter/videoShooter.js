@@ -8,7 +8,7 @@ function VideoShooter (videoElement) {
   canvas.height = videoElement.height;
 
   this.getShot = function (callback, progressCallback, numFrames, interval) {
-    numFrames = numFrames !== undefined ? numFrames : 3;
+    numFrames = numFrames !== undefined ? numFrames : 4;
     interval = interval !== undefined ? interval : 0.1; // In seconds
 
     var pendingFrames = numFrames;

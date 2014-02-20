@@ -1,5 +1,6 @@
 'use strict';
 /*  
+    console.log('%c dc ', 'background: #222; color: #bada55');
     git config remote.origin.url https://you:password@github.com/you/example.git
     rails generate scaffold name attribute:type
     perl nombrearchivo.pl -dns www.pagina.com

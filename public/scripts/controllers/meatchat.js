@@ -5,42 +5,27 @@
     $scope.canSend = false;
     $scope.roomId = $routeParams.id;
     $scope.CHAR_LIMIT = 250;
+    $('#add-chat').prop('readonly', true);
+    $scope.canSend = false;
+    $('#add-chat-blocker').removeClass('hidden');	
     $scope.$on('$routeChangeStart', function(event, current, previous, rejection) {
-    console.log('%c well ok bye bye! ', 'background: #222; color: #bada55');
     var log = {
     	room: $scope.roomId,
     	type: 'leave'
-    	}; 
+    	};
     $rootScope.socket.send(JSON.stringify(log));	
     });
     $(document).on('keydown', function (event) {
-      if (event.keyCode === 27)
+/*      if (event.keyCode === 27)
          if (($('.header').css('display'))==='block')
             $('').css('display', 'none')
          else
-            $('.header').css('display', 'block')
+            $('.header').css('display', 'block')*/
       if (event.target !== $('#add-chat')[0]) {
          $('#add-chat').focus();
          }
     });
     $scope.fingerprint = new Fingerprint({ canvas: true }).get();
-  		        $http.get('/api/signos/'+$scope.roomId).success(function(data) {
-  		      	    $scope.parseThread(data, function(){
-                    var log = {
-        	              room: $scope.roomId,
-        	              type: 'join'
-        	              };
-        	          if ($rootScope.socket.readyState)    
-                       $rootScope.socket.send(JSON.stringify(log));
-                    else
-                       setTimeout(function(){$rootScope.socket.send(JSON.stringify(log))}, 600)
-  		      	    	setTimeout(function(){
-  		      	    		  $scope.canSend = true;
-  		      	    	    $('#add-chat').prop('readonly', false);
-  		      	    	    $('#add-chat-blocker').addClass('hidden');
-  		      	    	}, 300);
-  		      	    });
-  		  	        });
     $scope.resetForm = function () {
          $scope.errors = false;
          $scope.message = '';
@@ -48,10 +33,8 @@
          $scope.showCamera = false;
        };  			  
     $scope.parseThread = function(msgs, callback) {
-    	//console.log(msgs.threads.length);
     	if (msgs.threads.length>0) {
     	   msgs.threads.reverse();
-    	   //console.log(msgs.threads);
          _.each(msgs.threads, function(data){
               var chatList = $('.chats ul');
               var li = document.createElement('li');
@@ -74,7 +57,9 @@
           $scope.showCamera = true;
           cameraHelper.startStream();
         } else {
+          //console.log('nei');
           $scope.back();
+          
         }
       };
     $scope.recordCamera = function () {
@@ -111,6 +96,21 @@
               console.log('on it');
               }
       };
-    $scope.resetForm();
-    $scope.promptCamera();
+  	$http.get('/api/signos/'+$scope.roomId).success(function(data) {
+  	    $scope.parseThread(data, function(){
+          var log = {
+                room: $scope.roomId,
+                type: 'join'
+                };
+          setTimeout(function()
+               {
+               $rootScope.socket.send(JSON.stringify(log));
+               $scope.canSend = true;
+  	    	     $('#add-chat').prop('readonly', false);
+  	    	     $('#add-chat-blocker').addClass('hidden');
+               }, 1000);
+  	         });
+  	       $scope.resetForm();  
+  	      $scope.promptCamera();    
+  		    });      
     });
