@@ -30,7 +30,14 @@ run(function ($rootScope, $http, $location) {
   	    app: $rootScope.app,
   	    type: 'start'
   	    };
-    $rootScope.socket.send(JSON.stringify(log));	 
+    $rootScope.socket.send(JSON.stringify(log));
+    setInterval(function(){
+    var log = {
+  	    app: $rootScope.app,
+  	    type: 'ping'
+  	    };
+    $rootScope.socket.send(JSON.stringify(log));      
+    },3000);
     };  
 }).
 config(function ($routeProvider, $locationProvider) {

@@ -81,8 +81,8 @@ angular.module('h2o.controllers', [
                       chatList.appendChild(li);
                       $scope.setupWaypoints(li);
                break;
-               case 'meatStart':   
-                      console.log(data.room+'ah si?');
+               case 'pong':   
+                      console.log('pong');
                break;              
       	       }
               }    
