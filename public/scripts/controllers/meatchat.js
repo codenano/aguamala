@@ -130,7 +130,8 @@
                 type: 'join'
                 };
        var intervalLoad = setInterval(function(){
-       if ($rootScope.state == 'start') {
+       if ($rootScope.state === 'start') {
+         clearInterval(intervalLoad);
                $rootScope.socket.send(JSON.stringify(log));
                $scope.canSend = true;
                $('#add-chat').prop('readonly', false);
@@ -139,7 +140,7 @@
                $scope.load = document.getElementById('load');
                $scope.load.style.display = 'none';
                $scope.app.style.display = 'block';      
-           clearInterval(intervalLoad);
+           
            }
        },100);  
        $scope.resetForm();

@@ -158,8 +158,8 @@ angular.module('h2o.aguamala', []).
     //console.log($rootScope.uname); 
      var intervalLoad = setInterval(function(){
        if ($rootScope.state == 'start') {
-          $scope.initAlien();         
           clearInterval(intervalLoad);
+          $scope.initAlien();
           }
        },100);   
     });
