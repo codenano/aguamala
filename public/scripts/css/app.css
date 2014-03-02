@@ -1,5 +1,5 @@
 body {
-  background: #1e1e1e;
+  background: #f0f0f0;
   background-size:cover;
   background-attachment:fixed;
   width:100%;
@@ -51,4 +51,4 @@ cursor:pointer;
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
     cursor:pointer;
-}  
+} 

@@ -23,41 +23,78 @@ angular.module('h2o.aguamala', []).
        console.log('here');
        switch($location.path()) {
                      case '/signup':     
-                        $scope.user_signup_action = function(){
-                         	 var user_data = {
-                         		  email: $scope.user_email.value,
-                         		  pw: $scope.pw.value,
+                       //setTimeout(function(){
+                       document.getElementById('singup_email').focus();
+                       //},500);
+                       $scope.singup_email_v = false;
+                       $scope.singup_pssw_v = false;
+                       $scope.signUp = function() {
+                         	var user_data = {
+                         		  email: $scope.singup_email.value,
+                         		  pw: $scope.singup_pssw.value,
                          		  type: 'signUp'
                          	    };
-                           $rootScope.socket.send(JSON.stringify(user_data)); 
-                           };
-                        $scope.signUp = function() {
-                           $scope.user_email = document.getElementById('user_email');
-                           $scope.pw = document.getElementById('psw');
-                           if (($scope.pw.value.length < 8)||(($scope.user_email.value.length < 6)||($scope.user_email.value=='')||($scope.user_email.value==null)))
-                              {
-                              var dl = document.getElementById('modalDialogLabel');
-                              var dlb = document.getElementById('modalDialogBody');
-                              dl.innerHTML = 'Llenar ambos datos';
-                              dlb.innerHTML = 'Para registrarte debes llenar tanto el campo de contaseña como el de email, con datos validos, la <b>contraseña</b> debe tener minimo <b>8 caracteres</b>, y el mail el formato de mail (usuario@dominio)';
-                              $('#modalDialog').on('hidden.bs.modal', function () {
-                                if ($scope.pw.value.length < 8)
+                          $rootScope.socket.send(JSON.stringify(user_data));                           
+                          };
+                       $scope.keyMail = function() {
+                           $scope.singup_email_v = false;
+                           $scope.singup_email = document.getElementById('singup_email');
+                           $scope.user_signup = document.getElementById('user_signup');
+                           $scope.validateEmail($scope.singup_email.value.toString(), function(res){
+                             if (res) 
+                                {
+                                $scope.singup_email.parentNode.childNodes[1].innerHTML = 'Email valido';
+                                $scope.singup_email.parentNode.className = 'form-group has-success';
+                                $scope.singup_email_v = true;
+                                }
+                                else
                                    {
-                                    $scope.pw.focus();   
-                                   }                                 
-                              });
-                              $('#modalDialog').modal('show');
-                              }
-                              else
-                                 {
-                                 $scope.user_signup_action();
-                                 }
-                           }; 
+                                   $scope.singup_email.parentNode.childNodes[1].innerHTML = 'Email no valido';
+                                   $scope.singup_email.parentNode.className = 'form-group has-error';
+                                   }
+                             if ($scope.singup_pssw_v && $scope.singup_email_v)
+                                {
+                                $scope.user_signup.disabled = false;
+                                }
+                                else
+                                   {
+                                   $scope.user_signup.disabled = true;
+                                   }
+                             });
+                          };
+                       $scope.keyPssw = function() {
+                           $scope.singup_pssw_v = false;
+                           $scope.singup_pssw = document.getElementById('singup_pssw');
+                           $scope.user_signup = document.getElementById('user_signup');
+                           $scope.validatePssw($scope.singup_pssw.value.toString(), function(res){
+                             if (res) 
+                                {
+                                $scope.singup_pssw.parentNode.childNodes[1].innerHTML = 'Contraseña valida';
+                                $scope.singup_pssw.parentNode.className = 'form-group has-success';
+                                $scope.singup_pssw_v = true;
+                                }
+                                else
+                                   {
+                                   $scope.singup_pssw.parentNode.childNodes[1].innerHTML = 'Contraseña no valida';
+                                   $scope.singup_pssw.parentNode.className = 'form-group has-error';
+                                   }
+                             if ($scope.singup_pssw_v && $scope.singup_email_v)
+                                {
+                                console.log('ready');
+                                $scope.user_signup.disabled = false;
+                                }
+                                else
+                                   {
+                                   console.log('notready'); 
+                                   $scope.user_signup.disabled = true;
+                                   }                                  
+                             });
+                          };                            
                      break;
                      case '/signin':
-                       setTimeout(function(){
-                         document.getElementById('singin_email').focus();
-                         },500);
+                       //setTimeout(function(){
+                       document.getElementById('singin_email').focus();
+                       //},500);
                        $scope.singin_email_v = false;
                        $scope.singin_pssw_v = false;
                        $scope.signIn = function() {
