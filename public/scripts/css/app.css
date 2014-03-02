@@ -8,11 +8,28 @@ body {
 }
 .container-app {
   margin-top:6em;
-  color:#f0f0f0;
 }
 .active {
 
 border-bottom:2px solid #fff;
+}
+#app {
+display:none;
+}
+#load {
+    background: url('../../images/aguamala/aguamala-48.png') center no-repeat !important;
+    -webkit-transition: -webkit-transform 1s;
+    transition: transform 1s;  
+  width:85px;
+  height:50px;
+  margin: 20% auto;
+  background-attachment:fixed;
+}
+.picNull {
+  width:85px;
+  height:50px;
+  margin: 20% auto;
+  background-attachment:fixed;
 }
 
 #menu_list, #menu_right, #menu_list li, #menu_list li a {

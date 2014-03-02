@@ -1,5 +1,6 @@
 'use strict';
 /*  
+    501878200046345148
     console.log('%c dc ', 'background: #222; color: #bada55');
     git config remote.origin.url https://you:password@github.com/you/example.git
     rails generate scaffold name attribute:type
@@ -28,15 +29,15 @@ run(function ($rootScope, $http, $location) {
   $rootScope.socket = new WebSocket('ws://' + host);       
   $rootScope.socket.onopen = function (wss) {
     var log = {
-  	    app: $rootScope.app,
-  	    type: 'start'
-  	    };
+      app: $rootScope.app,
+      type: 'start'
+      };
     $rootScope.socket.send(JSON.stringify(log));
     setInterval(function(){
     var log = {
-  	    app: $rootScope.app,
-  	    type: 'ping'
-  	    };
+      app: $rootScope.app,
+      type: 'ping'
+      };
     $rootScope.socket.send(JSON.stringify(log));      
     },3000);
     };  
@@ -45,7 +46,7 @@ config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {
       controller: 'aguamala',
-      templateUrl: 'partials/app.html'
+      templateUrl: 'partials/aguamala.html'
     })
     .when('/signup', {
       controller: 'aguamala',
@@ -73,10 +74,10 @@ config(function ($routeProvider, $locationProvider) {
     })
     .when('/module/aguamala/section/:section', {
       controller: 'aguamala',
-      templateUrl: 'partials/app.html'
+      templateUrl: 'partials/aguamala.html'
     })    
     .when('/module/:module/section/:section', {
-      controller: 'appCtrl',
+      controller: 'app',
       templateUrl: 'partials/app.html'
     })    
     .when('/meat/:id', {

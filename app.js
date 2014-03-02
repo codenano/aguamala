@@ -8,8 +8,12 @@ var express = require('express');
 var configurations = module.exports;
 var app = express();
 var server = require('http').createServer(app);
-var settings = require('./settings')(app, configurations, express);
-var h2o = require('./lib/h2o');
+var RedisStore = require("connect-redis")(express);
+var sessionStore = new RedisStore();
+var clientRedis = require("redis").createClient();
+
+var settings = require('./settings')(app, configurations, express, RedisStore, clientRedis);
+var h2o = require('./lib/h2o')(app, express, RedisStore, clientRedis, sessionStore);
 
 h2o.start(app, server, function(){
     require('./routes')(app, h2o);

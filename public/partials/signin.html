@@ -1,25 +1,17 @@
-<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="modalDialogLabel">Por ahora no hay sesiones</h4>
-      </div>
-      <div class="modal-body" id="modalDialogBody">
-        Vuelva mas tarde, no hay cupos
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="container-fluid container-app">
-  <div class="row">
-   <div class="col-xs-1 col-md-3 col-lg-4"></div>
+  <div class="row container">
+   <div class="col-xs-1 col-md-3 col-lg-5"></div>
    <div class="col-xs-10 col-md-6 col-lg-4">
-    <h3>Iniciar Sesión</h3>
-    <!--<form role="form" ng-submit="sendMessage($event)" ng-include="'/partials/includes/signin_form.html'"></form> -->
+   <div class="alert alert-warning alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+       <strong>Warning!</strong> Better check yourself, you're not looking too good.
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Iniciar Sesión</h4></div>
+      <div class="panel-body">
+      <form name="signinForm" id="signinForm" role="form" ng-submit="signIn($event)" ng-include="'/partials/includes/signin_form.html'"></form>
+    </div>
+    </div>
    </div>
   </div>
 </div>

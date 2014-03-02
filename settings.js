@@ -1,8 +1,6 @@
-module.exports = function(app, configurations, express) {
+module.exports = function(app, configurations, express, RedisStore, clientRedis) {
   //Module dependencies.
   var nconf = require('nconf');
-  var RedisStore = require("connect-redis")(express);
-  var clientRedis = require("redis").createClient();
   
   //var maxAge = 24 * 60 * 60 * 1000 * 28; //4 weeks
   var csrf = express.csrf();
@@ -16,15 +14,18 @@ module.exports = function(app, configurations, express) {
     app.set('view options', { layout: false });
     //uses
     app.use(express.static(__dirname + '/public'));
-    app.use(express.cookieParser());
+    app.use(express.cookieParser(nconf.get('session_secret')));
     app.use(express.session({
-        secret: nconf.get('session_secret'),
         store: new RedisStore({ host: 'localhost', port: nconf.get('session_port'), client: clientRedis })
     }));    
     app.use(express.logger());
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.methodOverride());
+    app.use(function(req, res, next) {
+          res.locals.session = req.session;
+          next();
+        });  
     app.enable('trust proxy');
     app.locals.pretty = true;
     app.locals.compileDebug = false;

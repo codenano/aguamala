@@ -1,96 +1,20 @@
 'use strict';
 
 angular.module('h2o.factories', []).
-  factory('authenticate',function($rootScope, $http, $location, $window) {
-       var resetUser = function () {
-         socket.emit('disconnect', {
-           email: $rootScope.email
-         });
-     
-         $rootScope.username = null;
-         localStorage.removeItem('personaEmail');
-         user.call();
+  factory('auth',function($rootScope, $http, $location, $window) {
+    var login = function (uname) {
+          $rootScope.isAuthenticated = true;
+          $rootScope.uname = uname;
+          console.log($rootScope.heartbeats+':'+$rootScope.state+'@'+uname);
+          window.location.href = '/';
+       }; 
+    var logout = function() {
+       console.log('logout');
        };
-     
-       var login = function () {
-         navigator.id.get(function (assertion) {
-           if (!assertion) {
-             console.log('No assertion provided');
-             return;
-           }
-     
-           $http({
-             url: '/persona/verify',
-             method: 'POST',
-             data: { assertion: assertion }
-           }).
-           success(function (data) {
-     
-             if (data.status === 'okay') {
-               $rootScope.isAuthenticated = true;
-               $rootScope.toggleSettings();
-     
-               $http({
-                 url: '/api/profile',
-                 method: 'GET'
-               }).success(function (data) {
-                 localStorage.setItem('personaEmail', data.email);
-                 $rootScope.email = data.email;
-                 $rootScope.username = data.username;
-                 $rootScope.avatar = data.avatar;
-     
-                 if (data.username) {
-                   location.reload();
-                 } else {
-                   $location.path('/profile');
-                 }
-     
-               }).error(function (data) {
-     
-                 $location.path('/profile');
-               });
-             } else {
-     
-               resetUser();
-               console.log('Login failed');
-             }
-           }).
-           error(function (data) {
-             resetUser();
-             console.log('Login failed');
-           });
-         });
-       };
-     
-       var logout = function () {
-         $http({
-           url: '/persona/logout',
-           method: 'POST'
-         }).
-         success(function (data) {
-           if (data.status === 'okay') {
-     
-             $http({
-               url: '/api/logout',
-               method: 'GET'
-             }).success(function (data) {
-     
-               resetUser();
-               $location.path('/');
-             });
-           } else {
-             console.log('Logout failed because ' + data.reason);
-           }
-         }).
-         error(function (data) {
-           console.log('error logging out: ', data);
-         });
-       };
-     
        return {
          login: login,
          logout: logout
-       };                       
+       };   
   }). 
   factory('cameraHelper', function ($rootScope, $http) {
     var videoShooter;
@@ -131,6 +55,7 @@ angular.module('h2o.factories', []).
       GumHelper.startVideoStreaming(function (err, stream, videoElement, width, height) {
         if (err) {
           console.log(err);
+          videoShooter = null;
         } else {
 
           svg = $('<svg class="progress" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 256 128" preserveAspectRatio="xMidYMid" hidden><path d="M0,0 " id="arc" fill="none" stroke="rgba(87,223,180,0.9)"></svg>');
