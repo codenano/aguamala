@@ -11,21 +11,14 @@ angular.module('h2o.aguamala', []).
        };
     $scope.validatePssw = function(pssw, callback) { 
        callback((pssw.length >= 8));
-       };       
-    $scope.initUser = function(){
-       //$rootScope.loadMenu();
-       console.log('fkdy');
-       };
+       }; 
     $scope.initAlien = function(){
        $rootScope.loadMenu();
        $scope.load.style.display = 'none';
        $scope.app.style.display = 'block';
-       console.log('here');
        switch($location.path()) {
                      case '/signup':     
-                       //setTimeout(function(){
                        document.getElementById('singup_email').focus();
-                       //},500);
                        $scope.singup_email_v = false;
                        $scope.singup_pssw_v = false;
                        $scope.signUp = function() {
@@ -80,21 +73,17 @@ angular.module('h2o.aguamala', []).
                                    }
                              if ($scope.singup_pssw_v && $scope.singup_email_v)
                                 {
-                                console.log('ready');
                                 $scope.user_signup.disabled = false;
                                 }
                                 else
                                    {
-                                   console.log('notready'); 
                                    $scope.user_signup.disabled = true;
                                    }                                  
                              });
                           };                            
                      break;
                      case '/signin':
-                       //setTimeout(function(){
                        document.getElementById('singin_email').focus();
-                       //},500);
                        $scope.singin_email_v = false;
                        $scope.singin_pssw_v = false;
                        $scope.signIn = function() {
@@ -149,12 +138,10 @@ angular.module('h2o.aguamala', []).
                                    }
                              if ($scope.singin_pssw_v && $scope.singin_email_v)
                                 {
-                                console.log('ready');
                                 $scope.user_signin.disabled = false;
                                 }
                                 else
                                    {
-                                   console.log('notready'); 
                                    $scope.user_signin.disabled = true;
                                    }                                  
                              });
@@ -170,14 +157,8 @@ angular.module('h2o.aguamala', []).
       };
     //console.log($rootScope.uname); 
      var intervalLoad = setInterval(function(){
-       console.log($rootScope.state+'c');
        if ($rootScope.state == 'start') {
-          if (($rootScope.uname == 'alien') || ($location.path()=='/'))  
-             $scope.initAlien();
-          else 
-             $rootScope.$apply(function(){
-               $location.path("/");
-             });         
+          $scope.initAlien();         
           clearInterval(intervalLoad);
           }
        },100);   

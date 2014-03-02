@@ -96,7 +96,6 @@ angular.module('h2o.controllers', [
                       $rootScope.uname = data.uname;
                       $rootScope.menuItems = data.menu;
                       $scope.loadMenu();
-                      console.log('start');
                break;
                case 'meat':   
                       var chatList = document.getElementById('chatList');
@@ -107,7 +106,6 @@ angular.module('h2o.controllers', [
                       if (data.pic)
                          pic.src = data.pic;
                       else {
-                         //pic.className = 'picNull';
                          pic.src = '/images/aguamala/aguamala-128.png';
                          pic.style.width = '90px';
                          pic.style.marginLeft = '10px';
@@ -118,16 +116,59 @@ angular.module('h2o.controllers', [
                       $scope.setupWaypoints(li);
                break;
                case 'pong':
-                    console.log($rootScope.uname);
                     $rootScope.heartbeats++;  
                break;
                case 'sign_in_fail':   
-                    console.log(data.response.toString());  
+                     var panel = document.getElementById('signinPanelBody');
+                     var div = document.createElement('div');
+                     var btn = document.createElement('button');
+                     var msg = document.createElement('p');
+                     div.className = 'alert alert-danger alert-dismissable';
+                     btn.type = 'button';
+                     btn.className = 'close';
+                     btn.dataset.dismiss = 'alert';
+                     btn.innerHTML = '&times;';
+                     msg.innerHTML = data.response.toString();
+                     div.appendChild(btn);
+                     div.appendChild(msg);
+                     panel.insertBefore(div, panel.firstChild); 
+                     $scope.singin_pssw = document.getElementById('singin_pssw');
+                     $scope.user_signin = document.getElementById('user_signin');
+                     $scope.singin_pssw.value = '';
+                     $scope.singin_pssw.parentNode.childNodes[1].innerHTML = 'Contraseña';
+                     $scope.singin_pssw.parentNode.className = 'form-group';                     
+                     $scope.user_signin.disabled = true;                    
                break;                 
                case 'sign_in_ok':   
-                    //console.log(data.response.toString());
                     auth.login(data.response);
                break;
+               case 'sign_up_fail':
+                     var panel = document.getElementById('signupPanelBody');
+                     var div = document.createElement('div');
+                     var btn = document.createElement('button');
+                     var msg = document.createElement('p');
+                     div.className = 'alert alert-danger alert-dismissable';
+                     btn.type = 'button';
+                     btn.className = 'close';
+                     btn.dataset.dismiss = 'alert';
+                     btn.innerHTML = '&times;';
+                     msg.innerHTML = data.response.detail;
+                     div.appendChild(btn);
+                     div.appendChild(msg);
+                     panel.insertBefore(div, panel.firstChild);
+                     $scope.singup_email = document.getElementById('singup_email');
+                     $scope.singup_email.parentNode.childNodes[1].innerHTML = 'Email no valido';
+                     $scope.singup_email.parentNode.className = 'form-group has-error';
+                     $scope.singup_pssw = document.getElementById('singup_pssw');
+                     $scope.user_signup = document.getElementById('user_signup');
+                     $scope.singup_pssw.value = '';
+                     $scope.singup_pssw.parentNode.childNodes[1].innerHTML = 'Contraseña';
+                     $scope.singup_pssw.parentNode.className = 'form-group';
+                     $scope.user_signup.disabled = true;                      
+               break;                 
+               case 'sign_up_ok':   
+                    auth.login(data.response);
+               break;               
                }
               }    
           };

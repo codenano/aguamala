@@ -130,7 +130,6 @@
                 type: 'join'
                 };
        var intervalLoad = setInterval(function(){
-       console.log($rootScope.state+'c');
        if ($rootScope.state == 'start') {
                $rootScope.socket.send(JSON.stringify(log));
                $scope.canSend = true;
