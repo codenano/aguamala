@@ -156,10 +156,16 @@ angular.module('h2o.aguamala', []).
                      }        
       };
     //console.log($rootScope.uname); 
-     var intervalLoad = setInterval(function(){
+     $scope.intervalLoad = setInterval(function(){
        if ($rootScope.state == 'start') {
-          clearInterval(intervalLoad);
-          $scope.initAlien();
+          clearInterval($scope.intervalLoad);
+          console.log($rootScope.uname);
+          if (($rootScope.uname === 'alien')||($location.path()=='/')) 
+             $scope.initAlien();
+          else   
+             $rootScope.$apply(function(){
+               $location.path("/");
+             });             
           }
        },100);   
     });

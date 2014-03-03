@@ -79,7 +79,11 @@ config(function ($routeProvider, $locationProvider) {
     .when('/module/:module/section/:section', {
       controller: 'app',
       templateUrl: 'partials/app.html'
-    })    
+    }) 
+    .when('/signout', {
+      controller: 'app',
+      templateUrl: 'partials/app.html'
+    })     
     .when('/meat/:id', {
       controller: 'meatchat',
       templateUrl: 'partials/meat.html'

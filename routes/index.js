@@ -11,6 +11,10 @@ module.exports = function (app, h2o) {
     else
        res.redirect('/');
   });
+  app.get('/signout', h2o.isLoggedIn, function (req, res) {
+    req.session.uname = 'alien';
+    res.redirect('/');
+  });  
   app.get('/signin', h2o.isLoggedIn, function (req, res) {
     if (req.session.uname == 'alien')
        res.render('app');

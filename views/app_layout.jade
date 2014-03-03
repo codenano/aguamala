@@ -22,11 +22,19 @@ html(ng-app='h2o')
           a(id="logoapp" class="navbar-brand logoapp")
         div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
           ul(id="menu_list" class="nav navbar-nav")
+          ul(class="nav navbar-nav navbar-right")
+           li#loggedInfo.dropdown
+            a.navbar-link.dropdown-toggle(href='' data-toggle="dropdown")
+                | 
+            ul.dropdown-menu.dropdown-menu
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href='') Salir
       .wrapper
         block content
     #load    
     script(src='/scripts/dist/h2o.min.js')
     script(src='/scripts/directives.js')
+    script(src='/scripts/base/cookies/docookies.js')
     script(src='/scripts/factories.js')
     script(src='/scripts/controllers/app.js')
     script(src='/scripts/controllers/aguamala.js')

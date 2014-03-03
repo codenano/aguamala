@@ -95,6 +95,16 @@ angular.module('h2o.controllers', [
                case 'start':
                       $rootScope.uname = data.uname;
                       $rootScope.menuItems = data.menu;
+                      var loggedInfo = document.getElementById('loggedInfo');
+                      if ($rootScope.uname !== 'alien') {
+                          loggedInfo.childNodes[0].innerHTML = ' <span class="glyphicon glyphicon-off"></span>';
+                          loggedInfo.childNodes[2].childNodes[1].childNodes[0].innerHTML = '<small><b>'+$rootScope.uname+'</b> Salir'+'</small>';
+                          loggedInfo.childNodes[2].addEventListener('click', function(){
+                          auth.logout();
+                          });
+                         }
+                      else
+                         loggedInfo.style.display = 'none';
                       $scope.loadMenu();
                break;
                case 'meat':   
@@ -140,8 +150,13 @@ angular.module('h2o.controllers', [
                      $scope.user_signin.disabled = true;                    
                break;                 
                case 'sign_in_ok':   
-                    auth.login(data.response);
+                     auth.login(data.response);
                break;
+               case 'sign_out':
+                     console.log($rootScope.uname);
+                     if (data.uname === $rootScope.uname)
+                        auth.logout();
+               break;               
                case 'sign_up_fail':
                      var panel = document.getElementById('signupPanelBody');
                      var div = document.createElement('div');
