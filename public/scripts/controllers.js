@@ -8,13 +8,26 @@ angular.module('h2o.controllers', [
   controller('h2o', function($rootScope, $scope, $http, $location, cameraHelper, auth){
     $scope.homeLink = document.getElementById('logoapp');
     $rootScope.menuList = document.getElementById('menu_list');
-    $scope.app = document.getElementById('app');
     $scope.load = document.getElementById('load');
     $scope.loadCont = document.getElementById('loadCont');
     $scope.twtfeedbtn = document.getElementById('twtfeedbtn');
     $scope.twtfeedCount = document.getElementById('twtfeedCount');
     $rootScope.heartbeats = 0;
     $scope.currentLink = $scope.homeLink;
+    $rootScope.loading = function(){
+      if ($rootScope.start) {
+         $rootScope.start = false;
+         $rootScope.menuList.style.display = 'none';
+         $scope.homeLink.style.display = 'none';
+         $scope.loadCont.style.display = 'block';
+         }
+      else {
+         $rootScope.start = true;
+         $rootScope.menuList.style.display = 'block';
+         $scope.homeLink.style.display = 'block';
+         $scope.loadCont.style.display = 'none';
+         }
+    };    
     $scope.homeLink.addEventListener('click', function(){
       $scope.currentLink.className = '';
       });
@@ -38,7 +51,7 @@ angular.module('h2o.controllers', [
         $scope.$apply(function(){
           $location.path("/");
         });
-      });    
+      });
     $scope.setupWaypoints = function (rawLi) {
       var li = $(rawLi);
       li.waypoint(function (direction) {
@@ -59,12 +72,14 @@ angular.module('h2o.controllers', [
         _.each($rootScope.menuItems, function(value){
              var li = document.createElement('li');
              var link = document.createElement('a');
+             var ic = document.createElement('i');
              if (value.url === $location.path()) {
                 li.className = 'active'; 
                 $scope.currentLink = li;
                 }
-             link.innerHTML = value.name.toUpperCase();
+             link.innerHTML = ' '+value.name;
              li.dataset.url = value.url;
+             ic.className = 'fa fa-'+value.icon;
              link.addEventListener('click', function(){
                    if ($location.path()!==value.url)
                       cameraHelper.resetStream();
@@ -81,9 +96,9 @@ angular.module('h2o.controllers', [
                      $location.path(value.url);
                    });
                   }, false);
+         link.insertBefore(ic, link.firstChild);          
          li.appendChild(link);
          $rootScope.menuList.appendChild(li);
-         $rootScope.state = 'start';
          });
        }
        else {
@@ -96,8 +111,31 @@ angular.module('h2o.controllers', [
              }
           }
     };
-    $rootScope.$on("$locationChangeSuccess", function(event, next, current) {
-      $rootScope.socket.onmessage = function (event) {
+    $rootScope.socket.onerror = function (wss) {
+     console.log('err');
+    };
+    $rootScope.socket.onclose = function (wss) {
+      $scope.loadCont.style.display = 'block';
+      setTimeout(function(){
+        window.location.href = '/';
+      }, 2000);
+     
+    };  
+    $rootScope.socket.onopen = function (wss) {
+      var log = {
+        app: $rootScope.app,
+        type: 'start'
+        };
+    $rootScope.socket.send(JSON.stringify(log));
+      setInterval(function(){
+      var log = {
+        app: $rootScope.app,
+        type: 'ping'
+        };   
+      $rootScope.socket.send(JSON.stringify(log));
+      },3000);
+      };       
+    $rootScope.socket.onmessage = function (event) {
         var data = JSON.parse(event.data);
           if ((data)&&(data.type)){
             switch(data.type) {
@@ -115,7 +153,8 @@ angular.module('h2o.controllers', [
                          }
                       else
                          loggedInfo.style.display = 'none';
-                      $scope.loadMenu();
+                      $rootScope.loadMenu();
+                      $rootScope.state = 'start';
                break;
                case 'meat':   
                       var chatList = document.getElementById('chatList');
@@ -126,14 +165,24 @@ angular.module('h2o.controllers', [
                       if (data.pic)
                          pic.src = data.pic;
                       else {
-                         pic.src = '/images/aguamala/aguamala-128.png';
-                         pic.style.width = '90px';
-                         pic.style.marginLeft = '10px';
+                         pic = document.createElement('span');
+                         var i = document.createElement('i');
+                         var ii = document.createElement('i');
+                         pic.className = 'fa-stack fa-2x fa-lg';
+                         i.className = 'fa fa-camera fa-stack-1x';
+                         ii.className = 'fa fa-ban fa-stack-2x text-danger';
+                         pic.appendChild(i);
+                         pic.appendChild(ii);
+                         pic.style.position = 'absolute'; 
+                         pic.style.top = '13px';
+                         pic.style.left = '30px';
                          }
                       li.appendChild(msg);
                       li.appendChild(pic);
                       chatList.appendChild(li);
-                      $scope.setupWaypoints(li);
+                      $('.chats').stop().animate({
+                          scrollTop: $('.chats')[0].scrollHeight
+                      }, 800);
                break;
                case 'pong':
                     $rootScope.heartbeats++;  
@@ -241,10 +290,9 @@ angular.module('h2o.controllers', [
                     mbody.appendChild(msg);
                     li.appendChild(mbody);
                     $scope.freebase.insertBefore(li, $scope.freebase.firstChild);
-                    $scope.loadCont.style.display = 'none';
+                    $rootScope.loading();
                break;                
                }
               }    
           };
-    });  
     });

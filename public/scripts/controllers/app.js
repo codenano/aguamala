@@ -6,8 +6,7 @@ angular.module('h2o.app', []).
      $scope.load = document.getElementById('loadCont');
      $scope.load.style.display = 'block';
      $scope.init = function(){
-        $rootScope.loadMenu();
-        $scope.load.style.display = 'none';   
+        console.log('load');   
         };
      $scope.intervalLoad = setInterval(function(){
        if ($rootScope.state === 'start') {
@@ -18,7 +17,8 @@ angular.module('h2o.app', []).
                $location.path("/");
              });
           else 
-             $scope.init(); 
+             $scope.init();
+             $scope.load.style.display = 'none';
           }
        },100);     
   });

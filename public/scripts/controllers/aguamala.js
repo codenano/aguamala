@@ -2,7 +2,8 @@
 angular.module('h2o.aguamala', []).
   controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams){
     $scope.load = document.getElementById('loadCont');
-    $scope.load.style.display = 'block';
+    $rootScope.start = true;
+    $rootScope.loading();
     $scope.validateEmail = function(email, callback) { 
        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
        callback(re.test(email));
@@ -14,8 +15,6 @@ angular.module('h2o.aguamala', []).
        callback((freebase.length >= 2));
        };       
     $scope.initAlien = function(){
-       $rootScope.loadMenu();
-       $scope.load.style.display = 'none';
        switch($location.path()) {
                      case '/signup':     
                        document.getElementById('singup_email').focus();
@@ -27,6 +26,7 @@ angular.module('h2o.aguamala', []).
                               pw: $scope.singup_pssw.value,
                               type: 'signUp'
                               };
+                          $rootScope.loading();   
                           $rootScope.socket.send(JSON.stringify(user_data));                           
                           };
                        $scope.keyMail = function() {
@@ -92,6 +92,7 @@ angular.module('h2o.aguamala', []).
                             pw: $scope.singin_pssw.value,
                             type: 'signIn'
                             };
+                          $rootScope.loading();
                           $rootScope.socket.send(JSON.stringify(user_data));                           
                           };
                        $scope.keyMail = function() {
@@ -148,6 +149,11 @@ angular.module('h2o.aguamala', []).
                           };                          
                      break;
                      case '/':
+                       $scope.f = document.getElementById('foo');
+                       document.addEventListener('click', function(ev){
+                           $scope.f.style.left = (ev.clientX-25)+'px';
+                           $scope.f.style.top = (ev.clientY-25)+'px';
+                       },false);
                        document.getElementById('freebaseInput').focus();
                        $scope.keyFreebase = function() {
                            $scope.singin_pssw_v = false;
@@ -176,7 +182,7 @@ angular.module('h2o.aguamala', []).
                             };
                           $scope.loadFreebase = document.getElementById('loadFreebase');
                           $scope.freebaseInput.value = '';
-                          $scope.load.style.display = 'block';
+                          $rootScope.loading();
                           $rootScope.socket.send(JSON.stringify(data));  
                        };
 
@@ -184,7 +190,8 @@ angular.module('h2o.aguamala', []).
                      default: 
                        //console.log($location.path());
                      break;
-                     }        
+                     } 
+      $rootScope.loading();               
       };
     //console.log($rootScope.uname); 
      $scope.intervalLoad = setInterval(function(){

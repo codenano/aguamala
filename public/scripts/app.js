@@ -26,21 +26,7 @@ run(function ($rootScope, $http, $location) {
   $rootScope.state = 'loading';
   var host = window.location.hostname;
   $rootScope.app = 'aguamala';
-  $rootScope.socket = new WebSocket('ws://' + host);       
-  $rootScope.socket.onopen = function (wss) {
-    var log = {
-      app: $rootScope.app,
-      type: 'start'
-      };
-    $rootScope.socket.send(JSON.stringify(log));
-    setInterval(function(){
-    var log = {
-      app: $rootScope.app,
-      type: 'ping'
-      };
-    $rootScope.socket.send(JSON.stringify(log));      
-    },3000);
-    };  
+  $rootScope.socket = new WebSocket('ws://' + host);
 }).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider

@@ -15,13 +15,23 @@ padding:0;
 margin:0;
 }
 .container-app {
-  margin-top:6em;
+  margin-top:7em;
+  margin-bottom:6em;
 }
 .active {
-border-bottom:2px solid #fff;
+border-bottom:3px solid #00ffff;
 }
-.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
-border-bottom:2px solid #fff;
+.navbar-default .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+border-bottom:3px solid #00ffff;
+}
+#app{
+-moz-transition: all 1s; 
+-webkit-transition: all 1s;  
+-ms-transition: all 1s;  
+-o-transition: all 1s;  
+transition: all 1s; 
+    
+  
 }
 #loadCont {
     position:fixed;
@@ -31,8 +41,13 @@ border-bottom:2px solid #fff;
   bottom:0;
   left:0;
   right:0;
-  z-index:1040;
+  z-index:1030;
   background-color: rgba(255,255,255,0.35);
+  -moz-transition: all 1s; 
+-webkit-transition: all 1s;  
+-ms-transition: all 1s;  
+-o-transition: all 1s;  
+transition: all 1s; 
 }
 #load {
     background: url('../../images/aguamala/aguamala-72.png') center no-repeat;
@@ -47,20 +62,43 @@ border-bottom:2px solid #fff;
     position:fixed;
     z-index:1050;
 }
-.picNull {
-  width:85px;
-  height:50px;
-  margin: 20% auto;
-  background-attachment:fixed;
+#foo{
+border-radius:50px;
+width:50px;
+height:50px;
+background:rgba(0,255,255,0.65);
+position:absolute;
+top:20em;
+left:10em;
+z-index:900;
+-moz-transition: all 1s; 
+-webkit-transition: all 1s;  
+-ms-transition: all 1s;  
+-o-transition: all 1s;  
+transition: all 1s;  
+}
+.panel {
+z-index:1020;
+position:relative;
+background-color:rgba(255,255,255,0.65);
+}
+.navbar-default {
+background-color:rgba(255,255,255,0.85);
 }
 
+
 #menu_list, #menu_right, #menu_list li, #menu_list li a {
-height:auto;
+
+-moz-transition: all 1s; 
+-webkit-transition: all 1s;  
+-ms-transition: all 1s;  
+-o-transition: all 1s;  
+transition: all 1s;
 }
 #menu_list li a:hover, #menu_list li:hover  {
 cursor:pointer;
 }
-.logoapp {
+#logoapp {
     text-indent: -9999px;
     display: inline-block;
     height: 50px;
@@ -69,8 +107,15 @@ cursor:pointer;
     -webkit-transition: -webkit-transform 1s;
     transition: transform 1s;
 }
-.logoapp:hover {
+#logoapp:hover {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
     cursor:pointer;
 } 
+@media (max-width: 780px) {
+#twtfeed ul{
+width:100%;
+margin:0;
+padding:0;
+}
+}

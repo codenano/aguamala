@@ -3,7 +3,8 @@
   controller('meatchat', function ($rootScope, $scope, $location, $http, $routeParams, cameraHelper) {
     $scope.menuList = document.getElementById('menu_list');
     $scope.load = document.getElementById('loadCont');
-    $scope.load.style.display = 'block';  
+    $rootScope.start = true;
+    $rootScope.loading();  
     $scope.canSend = false;
     $scope.roomId = $routeParams.id;
     $scope.CHAR_LIMIT = 250;
@@ -37,16 +38,23 @@
               var msg = document.createElement('p');
               var pic = document.createElement('img');
               msg.innerHTML = data.msg;
-              console.log(data.pic+'asd');
-                      msg.innerHTML = data.msg;
-                      if (data.pic)
-                         pic.src = data.pic;
-                      else {
-                         pic.src = '/images/aguamala/aguamala-128.png';
-                         pic.style.width = '90px';
-                         pic.style.marginLeft = '10px';
-                         }
               li.appendChild(msg);
+              msg.innerHTML = data.msg;
+              if (data.pic)
+                 pic.src = data.pic;
+              else {
+                 pic = document.createElement('span');
+                 var i = document.createElement('i');
+                 var ii = document.createElement('i');
+                 pic.className = 'fa-stack fa-2x fa-lg';
+                 i.className = 'fa fa-camera fa-stack-1x';
+                 ii.className = 'fa fa-ban fa-stack-2x text-danger';
+                 pic.appendChild(i);
+                 pic.appendChild(ii);
+                 pic.style.position = 'absolute'; 
+                 pic.style.top = '13px';
+                 pic.style.left = '30px';
+                 }
               li.appendChild(pic);
               chatList.append(li);
            });
@@ -126,7 +134,7 @@
                $scope.canSend = true;
                $('#add-chat').prop('readonly', false);
                $('#add-chat-blocker').addClass('hidden');
-               $scope.load.style.display = 'none';
+               $rootScope.loading();
                }
        },100);  
        $scope.resetForm();
