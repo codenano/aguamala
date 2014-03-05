@@ -1,7 +1,6 @@
 'use strict';
 angular.module('h2o.aguamala', []).
   controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams){
-    $scope.app = document.getElementById('app');
     $scope.load = document.getElementById('loadCont');
     $scope.load.style.display = 'block';
     $scope.validateEmail = function(email, callback) { 
