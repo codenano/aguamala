@@ -149,6 +149,7 @@ angular.module('h2o.aguamala', []).
                           };                          
                      break;
                      case '/':
+                       document.getElementById('freebaseInput').focus();
                        $scope.keyFreebase = function() {
                            $scope.singin_pssw_v = false;
                            $scope.singin_pssw = document.getElementById('freebaseInput');
