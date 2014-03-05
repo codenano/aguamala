@@ -4,7 +4,7 @@ angular.module('h2o.app', []).
      $scope.module = $routeParams.module;
      $scope.section = $routeParams.section;
      $scope.app = document.getElementById('app');
-     $scope.load = document.getElementById('load');
+     $scope.load = document.getElementById('loadCont');
      $scope.load.style.display = 'block';
      $scope.app.style.display = 'none'; 
      $scope.init = function(){
