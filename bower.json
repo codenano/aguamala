@@ -23,6 +23,7 @@
     "animated-gif": "sole/Animated_GIF#38c7e30965578591de0f9dbbc87829f9259fd289",
     "jquery-waypoints": "2.0.3",
     "bootstrap-sass": "3.0.2",
-    "ngInfiniteScroll":"1.0.0"
+    "ngInfiniteScroll":"1.0.0",
+    "font-awesome":"4.0.3"
   }  
 }

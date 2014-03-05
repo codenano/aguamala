@@ -7,8 +7,8 @@
   },
   "private": true,
   "engines": {
-    "node": "0.10.9",
-    "npm": "1.2.24"
+    "node": ">= 0.10.9",
+    "npm": ">= 1.2.24"
   },
   "scripts": {
     "start": "nodemon app.js"
@@ -18,11 +18,14 @@
     "express": "3.4.8",
     "nconf": "0.6.9",
     "ws": "0.4.31",
+    "async": "0.2.10",
+    "request": "2.34.0",
     "underscore": "1.5.2",
     "jade": "0.35.0",
     "redis": "0.10.0",
     "connect-redis": "1.4.6",
-    "nodemailer": "0.6.0"
+    "nodemailer": "0.6.0",
+    "twitter": "v0.2.7"
   },
   "devDependencies": {
     "nodemon": "1.0.9",

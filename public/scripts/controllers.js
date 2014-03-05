@@ -8,10 +8,19 @@ angular.module('h2o.controllers', [
   controller('h2o', function($rootScope, $scope, $http, $location, cameraHelper, auth){
     $scope.homeLink = document.getElementById('logoapp');
     $rootScope.menuList = document.getElementById('menu_list');
+    $scope.app = document.getElementById('app');
+    $scope.load = document.getElementById('load');
+    $scope.loadCont = document.getElementById('loadCont');
+    $scope.twtfeedbtn = document.getElementById('twtfeedbtn');
+    $scope.twtfeedCount = document.getElementById('twtfeedCount');
     $rootScope.heartbeats = 0;
+    $scope.currentLink = $scope.homeLink;
     $scope.homeLink.addEventListener('click', function(){
       $scope.currentLink.className = '';
       });
+    $scope.twtfeedbtn.addEventListener('click', function(){
+      $scope.twtfeedCount.innerHTML = '';
+      });  
     var $rota = $('#load'),
         degree = 0,
         timer;
@@ -95,6 +104,7 @@ angular.module('h2o.controllers', [
                case 'start':
                       $rootScope.uname = data.uname;
                       $rootScope.menuItems = data.menu;
+                      $rootScope.sid = data.sid;
                       var loggedInfo = document.getElementById('loggedInfo');
                       if ($rootScope.uname !== 'alien') {
                           loggedInfo.childNodes[0].innerHTML = ' <span class="glyphicon glyphicon-off"></span>';
@@ -150,10 +160,10 @@ angular.module('h2o.controllers', [
                      $scope.user_signin.disabled = true;                    
                break;                 
                case 'sign_in_ok':   
-                     auth.login(data.response);
+                     if (data.sid === $rootScope.sid)
+                        auth.login(data.response);
                break;
                case 'sign_out':
-                     console.log($rootScope.uname);
                      if (data.uname === $rootScope.uname)
                         auth.logout();
                break;               
@@ -181,9 +191,58 @@ angular.module('h2o.controllers', [
                      $scope.singup_pssw.parentNode.className = 'form-group';
                      $scope.user_signup.disabled = true;                      
                break;                 
-               case 'sign_up_ok':   
+               case 'sign_up_ok':  
+                  if (data.sid === $rootScope.sid)
                     auth.login(data.response);
+               break; 
+               case 'twt_up':
+                    console.log(data.response);
+                    if ($scope.twtfeedCount.innerHTML === '')
+                       $scope.twtfeedCount.innerHTML = '1';
+                    else
+                       $scope.twtfeedCount.innerHTML = (parseInt($scope.twtfeedCount.innerHTML)+1).toString();
+                    $scope.twtfeed = document.getElementById('twtfeedL');
+                    var li = document.createElement('li');
+                    var link = document.createElement('a');
+                    var img = document.createElement('img');
+                    var mbody = document.createElement('div');
+                    li.className = 'list-group-item media';
+                    li.role = 'presentation';
+                    link.className = 'pull-left';
+                    link.target = '_blank';
+                    link.href = data.response.profile_pic;
+                    img.className = 'media-object';
+                    img.src = data.response.profile_pic;
+                    img.alt = data.response.user;
+                    link.appendChild(img);
+                    mbody.className = 'media-body';
+                    mbody.innerHTML = data.response.msg.toString();
+                    li.appendChild(link);
+                    li.appendChild(mbody);
+                    $scope.twtfeed.insertBefore(li, $scope.twtfeed.firstChild);                   
+               break;
+               case 'join':
+                 if (data.sid === $rootScope.sid)
+                      window.location.href = "/meat/"+data.room;
                break;               
+               case 'freebase_description':
+                    $scope.freebase = document.getElementById('freebase');
+                    var li = document.createElement('li');
+                    var img = document.createElement('img');
+                    var mbody = document.createElement('div');
+                    var mtitle = document.createElement('h4');
+                    var msg = document.createElement('p');
+                    li.className = 'list-group-item';
+                    mbody.className = 'media-body';
+                    mtitle.className = 'media-heading';
+                    msg.innerHTML = data.response;
+                    mtitle.innerHTML = data.query;
+                    mbody.appendChild(mtitle);
+                    mbody.appendChild(msg);
+                    li.appendChild(mbody);
+                    $scope.freebase.insertBefore(li, $scope.freebase.firstChild);
+                    $scope.loadCont.style.display = 'none';
+               break;                
                }
               }    
           };

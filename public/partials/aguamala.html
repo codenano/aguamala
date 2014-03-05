@@ -3,12 +3,16 @@
 </style>
 <!-- Modal -->
 <div class="container-fluid container-app">
-  <div class="row">
+  <div class="row-container">
    <div class="col-xs-1 col-md-3 col-lg-4"></div>
    <div class="col-xs-10 col-md-6 col-lg-4">
-    <h3>aguamala</h3>
-    <p>Envio, recepcion y almacenamiento de datos en tiempo real bajo estructura cliente-servidor.</p>
-    <p></p>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>aguamala</h4></div>
+        <div id="freebasePanelBody" class="panel-body">
+          <form name="freebaseForm" id="freebaseForm" role="form" ng-submit="freebase($event)" ng-include="'/partials/includes/freebase_form.html'"></form>
+        </div>      
+        <ul id="freebase" class="list-group media-list">
+        </ul> 
    </div>
   </div>
 </div>

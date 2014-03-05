@@ -34,10 +34,7 @@ module.exports = function (app, h2o) {
        res.render('app');
   });  
   app.get('/meat/:id', h2o.isLoggedIn, function (req, res) {
-    if (req.session.uname == 'alien')
-       res.render('app');
-    else
-       res.redirect('/');
+      res.render('app');
   });
   app.get('/ip', h2o.isLoggedIn, function (req, res) {
     res.json({

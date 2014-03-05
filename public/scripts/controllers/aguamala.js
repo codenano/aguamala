@@ -2,9 +2,8 @@
 angular.module('h2o.aguamala', []).
   controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams){
     $scope.app = document.getElementById('app');
-    $scope.load = document.getElementById('load');
+    $scope.load = document.getElementById('loadCont');
     $scope.load.style.display = 'block';
-    $scope.app.style.display = 'none'; 
     $scope.validateEmail = function(email, callback) { 
        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
        callback(re.test(email));
@@ -12,21 +11,23 @@ angular.module('h2o.aguamala', []).
     $scope.validatePssw = function(pssw, callback) { 
        callback((pssw.length >= 8));
        }; 
+    $scope.validateFreebase = function(freebase, callback) { 
+       callback((freebase.length >= 2));
+       };       
     $scope.initAlien = function(){
        $rootScope.loadMenu();
        $scope.load.style.display = 'none';
-       $scope.app.style.display = 'block';
        switch($location.path()) {
                      case '/signup':     
                        document.getElementById('singup_email').focus();
                        $scope.singup_email_v = false;
                        $scope.singup_pssw_v = false;
                        $scope.signUp = function() {
-                         	var user_data = {
-                         		  email: $scope.singup_email.value,
-                         		  pw: $scope.singup_pssw.value,
-                         		  type: 'signUp'
-                         	    };
+                          var user_data = {
+                              email: $scope.singup_email.value,
+                              pw: $scope.singup_pssw.value,
+                              type: 'signUp'
+                              };
                           $rootScope.socket.send(JSON.stringify(user_data));                           
                           };
                        $scope.keyMail = function() {
@@ -87,11 +88,11 @@ angular.module('h2o.aguamala', []).
                        $scope.singin_email_v = false;
                        $scope.singin_pssw_v = false;
                        $scope.signIn = function() {
-                         	var user_data = {
-                         		  email: $scope.singin_email.value,
-                         		  pw: $scope.singin_pssw.value,
-                         		  type: 'signIn'
-                         	    };
+                          var user_data = {
+                            email: $scope.singin_email.value,
+                            pw: $scope.singin_pssw.value,
+                            type: 'signIn'
+                            };
                           $rootScope.socket.send(JSON.stringify(user_data));                           
                           };
                        $scope.keyMail = function() {
@@ -147,8 +148,38 @@ angular.module('h2o.aguamala', []).
                              });
                           };                          
                      break;
-                     case '/meat':
-                       console.log('meat');
+                     case '/':
+                       $scope.keyFreebase = function() {
+                           $scope.singin_pssw_v = false;
+                           $scope.singin_pssw = document.getElementById('freebaseInput');
+                           $scope.user_signin = document.getElementById('freebaseSearch');
+                           $scope.validateFreebase($scope.singin_pssw.value.toString(), function(res){
+                             if (res) 
+                                {
+                                $scope.singin_pssw.parentNode.childNodes[1].innerHTML = 'Termino valido';
+                                $scope.singin_pssw.parentNode.className = 'form-group has-success';
+                                $scope.user_signin.disabled = false;
+                                }
+                                else
+                                   {
+                                   $scope.singin_pssw.parentNode.childNodes[1].innerHTML = '';
+                                   $scope.singin_pssw.parentNode.className = 'form-group';
+                                   $scope.user_signin.disabled = true;
+                                   }                                
+                             });
+                          };                        
+                       $scope.freebase = function(){
+                          $scope.freebaseInput = document.getElementById('freebaseInput');
+                          var data = {
+                            query: $scope.freebaseInput.value,
+                            type: 'freebase_description'
+                            };
+                          $scope.loadFreebase = document.getElementById('loadFreebase');
+                          $scope.freebaseInput.value = '';
+                          $scope.load.style.display = 'block';
+                          $rootScope.socket.send(JSON.stringify(data));  
+                       };
+
                      break;                     
                      default: 
                        //console.log($location.path());

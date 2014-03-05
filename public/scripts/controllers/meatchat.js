@@ -20,11 +20,6 @@
     $rootScope.socket.send(JSON.stringify(log));	
     });
     $(document).on('keydown', function (event) {
-/*      if (event.keyCode === 27)
-         if (($('.header').css('display'))==='block')
-            $('').css('display', 'none')
-         else
-            $('.header').css('display', 'block')*/
       if (event.target !== $('#add-chat')[0]) {
          $('#add-chat').focus();
          }
@@ -38,7 +33,6 @@
        };
     $scope.parseThread = function(msgs, callback) {
       if (msgs.threads.length>0) {
-        //msgs.threads.reverse();
         _.each(msgs.threads, function(data){
               var chatList = $('.chats ul');
               var li = document.createElement('li');
@@ -50,7 +44,6 @@
                       if (data.pic)
                          pic.src = data.pic;
                       else {
-                         //pic.className = 'picNull';
                          pic.src = '/images/aguamala/aguamala-128.png';
                          pic.style.width = '90px';
                          pic.style.marginLeft = '10px';
@@ -70,7 +63,6 @@
           $scope.showCamera = true;
           cameraHelper.startStream();
         } else {
-          //console.log('nei');
           $scope.back();
           
         }
@@ -79,20 +71,19 @@
         $('#add-chat').prop('readonly', true);
         $scope.canSend = false;
         $('#add-chat-blocker').removeClass('hidden');
-      
            cameraHelper.startScreenshot(function (pictureData) {
              $scope.$apply(function () {
-             	if (pictureData){
+              if (pictureData){
                   $scope.picture = pictureData;
                   var msg = {
                     type: 'meat',
-                  	 pic: $scope.picture,
-                  	 msg: $('#add-chat').val(),
-                  	 fingerprint: $scope.fingerprint,
-                  	 room: $scope.roomId
+                    pic: $scope.picture,
+                    msg: $('#add-chat').val(),
+                    fingerprint: $scope.fingerprint,
+                    room: $scope.roomId
                     };
                   $rootScope.socket.send(JSON.stringify(msg));
-             	   }
+                  }
              	$('#add-chat').val('');
                $('#add-chat').prop('readonly', false);
                $scope.canSend = true;
@@ -115,6 +106,7 @@
                     fingerprint: $scope.fingerprint,
                     room: $scope.roomId
                     };
+                  $('#add-chat').val('');  
                   $rootScope.socket.send(JSON.stringify(msg));
               }           
            }
@@ -129,9 +121,9 @@
                 room: $scope.roomId,
                 type: 'join'
                 };
-       var intervalLoad = setInterval(function(){
+       $scope.intervalLoad = setInterval(function(){
        if ($rootScope.state === 'start') {
-         clearInterval(intervalLoad);
+         clearInterval($scope.intervalLoad);
                $rootScope.socket.send(JSON.stringify(log));
                $scope.canSend = true;
                $('#add-chat').prop('readonly', false);
@@ -139,9 +131,8 @@
                $scope.app = document.getElementById('app');
                $scope.load = document.getElementById('load');
                $scope.load.style.display = 'none';
-               $scope.app.style.display = 'block';      
-           
-           }
+               $scope.app.style.display = 'block';
+               }
        },100);  
        $scope.resetForm();
        $scope.promptCamera();

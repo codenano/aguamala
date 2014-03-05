@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 var nconf = require('nconf');
 nconf.argv().env().file({ file: 'local.json' });
 var appPort = nconf.get('port');
@@ -13,7 +15,7 @@ var sessionStore = new RedisStore();
 var clientRedis = require("redis").createClient();
 
 var settings = require('./settings')(app, configurations, express, RedisStore, clientRedis);
-var h2o = require('./lib/h2o')(app, express, RedisStore, clientRedis, sessionStore);
+var h2o = require('./lib/h2o')(app, express, sessionStore);
 
 h2o.start(app, server, function(){
     require('./routes')(app, h2o);
