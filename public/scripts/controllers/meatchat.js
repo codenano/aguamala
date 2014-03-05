@@ -126,10 +126,7 @@
                $scope.canSend = true;
                $('#add-chat').prop('readonly', false);
                $('#add-chat-blocker').addClass('hidden');
-               $scope.app = document.getElementById('app');
-               $scope.load = document.getElementById('load');
                $scope.load.style.display = 'none';
-               $scope.app.style.display = 'block';
                }
        },100);  
        $scope.resetForm();
