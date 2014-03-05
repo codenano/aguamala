@@ -2,10 +2,8 @@
   angular.module('h2o.meatchat', []).
   controller('meatchat', function ($rootScope, $scope, $location, $http, $routeParams, cameraHelper) {
     $scope.menuList = document.getElementById('menu_list');
-    $scope.app = document.getElementById('app');
-    $scope.load = document.getElementById('load');
-    $scope.load.style.display = 'block';
-    $scope.app.style.display = 'none';    
+    $scope.load = document.getElementById('loadCont');
+    $scope.load.style.display = 'block';  
     $scope.canSend = false;
     $scope.roomId = $routeParams.id;
     $scope.CHAR_LIMIT = 250;
