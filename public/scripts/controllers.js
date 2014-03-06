@@ -27,17 +27,17 @@ angular.module('h2o.controllers', [
          $scope.homeLink.style.display = 'block';
          $scope.loadCont.style.display = 'none';
          }
-    };    
+    };
     $scope.homeLink.addEventListener('click', function(){
       $scope.currentLink.className = '';
       });
     $scope.twtfeedbtn.addEventListener('click', function(){
       $scope.twtfeedCount.innerHTML = '';
-      });  
+      });
     var $rota = $('#load'),
         degree = 0,
         timer;
-    $scope.rotate = function() {    
+    $scope.rotate = function() {
         $rota.css({ transform: 'rotate(' + degree + 'deg)'});
         // timeout increase degrees:
         timer = setTimeout(function() {
@@ -45,7 +45,7 @@ angular.module('h2o.controllers', [
             $scope.rotate(); // loop it
         },25);
     };
-    $scope.rotate();    // run it!        
+    $scope.rotate();    // run it!
     $('#logoapp').on('click', function(){
       cameraHelper.resetStream();
         $scope.$apply(function(){
@@ -74,7 +74,7 @@ angular.module('h2o.controllers', [
              var link = document.createElement('a');
              var ic = document.createElement('i');
              if (value.url === $location.path()) {
-                li.className = 'active'; 
+                li.className = 'active';
                 $scope.currentLink = li;
                 }
              link.innerHTML = ' '+value.name;
@@ -96,7 +96,7 @@ angular.module('h2o.controllers', [
                      $location.path(value.url);
                    });
                   }, false);
-         link.insertBefore(ic, link.firstChild);          
+         link.insertBefore(ic, link.firstChild);
          li.appendChild(link);
          $rootScope.menuList.appendChild(li);
          });
@@ -105,9 +105,9 @@ angular.module('h2o.controllers', [
           var links = $rootScope.menuList.childNodes;
           for(var i=0; i<links.length; i++) {
              if (links[i].dataset.url!==$location.path())
-                links[i].className = ''; 
+                links[i].className = '';
              else
-                links[i].className = 'active'; 
+                links[i].className = 'active';
              }
           }
     };
@@ -119,8 +119,8 @@ angular.module('h2o.controllers', [
       setTimeout(function(){
         window.location.href = '/';
       }, 2000);
-     
-    };  
+
+    };
     $rootScope.socket.onopen = function (wss) {
       var log = {
         app: $rootScope.app,
@@ -131,10 +131,10 @@ angular.module('h2o.controllers', [
       var log = {
         app: $rootScope.app,
         type: 'ping'
-        };   
+        };
       $rootScope.socket.send(JSON.stringify(log));
       },3000);
-      };       
+      };
     $rootScope.socket.onmessage = function (event) {
         var data = JSON.parse(event.data);
           if ((data)&&(data.type)){
@@ -156,7 +156,7 @@ angular.module('h2o.controllers', [
                       $rootScope.loadMenu();
                       $rootScope.state = 'start';
                break;
-               case 'meat':   
+               case 'meat':
                       var chatList = document.getElementById('chatList');
                       var li = document.createElement('li');
                       var msg = document.createElement('p');
@@ -173,21 +173,21 @@ angular.module('h2o.controllers', [
                          ii.className = 'fa fa-ban fa-stack-2x text-danger';
                          pic.appendChild(i);
                          pic.appendChild(ii);
-                         pic.style.position = 'absolute'; 
+                         pic.style.position = 'absolute';
                          pic.style.top = '13px';
                          pic.style.left = '30px';
                          }
                       li.appendChild(msg);
                       li.appendChild(pic);
                       chatList.appendChild(li);
-                      $('.chats').stop().animate({
-                          scrollTop: $('.chats')[0].scrollHeight
+                      $('body').stop().animate({
+                          scrollTop: $('body')[0].scrollHeight
                       }, 800);
                break;
                case 'pong':
-                    $rootScope.heartbeats++;  
+                    $rootScope.heartbeats++;
                break;
-               case 'sign_in_fail':   
+               case 'sign_in_fail':
                      var panel = document.getElementById('signinPanelBody');
                      var div = document.createElement('div');
                      var btn = document.createElement('button');
@@ -200,22 +200,23 @@ angular.module('h2o.controllers', [
                      msg.innerHTML = data.response.toString();
                      div.appendChild(btn);
                      div.appendChild(msg);
-                     panel.insertBefore(div, panel.firstChild); 
+                     panel.insertBefore(div, panel.firstChild);
                      $scope.singin_pssw = document.getElementById('singin_pssw');
                      $scope.user_signin = document.getElementById('user_signin');
                      $scope.singin_pssw.value = '';
                      $scope.singin_pssw.parentNode.childNodes[1].innerHTML = 'Contraseña';
-                     $scope.singin_pssw.parentNode.className = 'form-group';                     
-                     $scope.user_signin.disabled = true;                    
-               break;                 
-               case 'sign_in_ok':   
+                     $scope.singin_pssw.parentNode.className = 'form-group';
+                     $scope.user_signin.disabled = true;
+                     $rootScope.loading();
+               break;
+               case 'sign_in_ok':
                      if (data.sid === $rootScope.sid)
                         auth.login(data.response);
                break;
                case 'sign_out':
                      if (data.uname === $rootScope.uname)
                         auth.logout();
-               break;               
+               break;
                case 'sign_up_fail':
                      var panel = document.getElementById('signupPanelBody');
                      var div = document.createElement('div');
@@ -238,12 +239,13 @@ angular.module('h2o.controllers', [
                      $scope.singup_pssw.value = '';
                      $scope.singup_pssw.parentNode.childNodes[1].innerHTML = 'Contraseña';
                      $scope.singup_pssw.parentNode.className = 'form-group';
-                     $scope.user_signup.disabled = true;                      
-               break;                 
-               case 'sign_up_ok':  
+                     $scope.user_signup.disabled = true;
+                     $rootScope.loading();
+               break;
+               case 'sign_up_ok':
                   if (data.sid === $rootScope.sid)
                     auth.login(data.response);
-               break; 
+               break;
                case 'twt_up':
                     console.log(data.response);
                     if ($scope.twtfeedCount.innerHTML === '')
@@ -268,12 +270,12 @@ angular.module('h2o.controllers', [
                     mbody.innerHTML = data.response.msg.toString();
                     li.appendChild(link);
                     li.appendChild(mbody);
-                    $scope.twtfeed.insertBefore(li, $scope.twtfeed.firstChild);                   
+                    $scope.twtfeed.insertBefore(li, $scope.twtfeed.firstChild);
                break;
                case 'join':
                  if (data.sid === $rootScope.sid)
                       window.location.href = "/meat/"+data.room;
-               break;               
+               break;
                case 'freebase_description':
                     $scope.freebase = document.getElementById('freebase');
                     var li = document.createElement('li');
@@ -291,8 +293,8 @@ angular.module('h2o.controllers', [
                     li.appendChild(mbody);
                     $scope.freebase.insertBefore(li, $scope.freebase.firstChild);
                     $rootScope.loading();
-               break;                
+               break;
                }
-              }    
+              }
           };
     });

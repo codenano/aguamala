@@ -15,8 +15,6 @@ padding:0;
 margin:0;
 }
 .container-app {
-  margin-top:7em;
-  margin-bottom:6em;
 }
 .active {
 border-bottom:3px solid #00ffff;
@@ -25,13 +23,13 @@ border-bottom:3px solid #00ffff;
 border-bottom:3px solid #00ffff;
 }
 #app{
--moz-transition: all 1s; 
--webkit-transition: all 1s;  
--ms-transition: all 1s;  
--o-transition: all 1s;  
-transition: all 1s; 
-    
-  
+-moz-transition: all 1s;
+-webkit-transition: all 1s;
+-ms-transition: all 1s;
+-o-transition: all 1s;
+transition: all 1s;
+
+
 }
 #loadCont {
     position:fixed;
@@ -43,11 +41,11 @@ transition: all 1s;
   right:0;
   z-index:1030;
   background-color: rgba(255,255,255,0.35);
-  -moz-transition: all 1s; 
--webkit-transition: all 1s;  
--ms-transition: all 1s;  
--o-transition: all 1s;  
-transition: all 1s; 
+  -moz-transition: all 1s;
+-webkit-transition: all 1s;
+-ms-transition: all 1s;
+-o-transition: all 1s;
+transition: all 1s;
 }
 #load {
     background: url('../../images/aguamala/aguamala-72.png') center no-repeat;
@@ -58,7 +56,7 @@ transition: all 1s;
   top:0;
   bottom:0;
   left:0;
-  right:0;    
+  right:0;
     position:fixed;
     z-index:1050;
 }
@@ -71,11 +69,11 @@ position:absolute;
 top:20em;
 left:10em;
 z-index:900;
--moz-transition: all 1s; 
--webkit-transition: all 1s;  
--ms-transition: all 1s;  
--o-transition: all 1s;  
-transition: all 1s;  
+-moz-transition: all 1s;
+-webkit-transition: all 1s;
+-ms-transition: all 1s;
+-o-transition: all 1s;
+transition: all 1s;
 }
 .panel {
 z-index:1020;
@@ -89,10 +87,10 @@ background-color:rgba(255,255,255,0.85);
 
 #menu_list, #menu_right, #menu_list li, #menu_list li a {
 
--moz-transition: all 1s; 
--webkit-transition: all 1s;  
--ms-transition: all 1s;  
--o-transition: all 1s;  
+-moz-transition: all 1s;
+-webkit-transition: all 1s;
+-ms-transition: all 1s;
+-o-transition: all 1s;
 transition: all 1s;
 }
 #menu_list li a:hover, #menu_list li:hover  {
@@ -111,7 +109,7 @@ cursor:pointer;
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
     cursor:pointer;
-} 
+}
 @media (max-width: 780px) {
 #twtfeed ul{
 width:100%;

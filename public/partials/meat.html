@@ -162,7 +162,7 @@ z-index:10;
 
   .video-wrapper {
     margin: 0;
-    position: absolute;
+    position: fixed;
     bottom:50px;
     left: 2.5%;
     width: 120px;
@@ -171,7 +171,7 @@ z-index:10;
   .form-wrapper {
     height: 50px;
     margin: 0;
-    position: absolute;
+    position: fixed;
     bottom:50px;
     right:0;
     width: 100%;
@@ -203,13 +203,7 @@ svg.progress.visible {
     opacity: 1;
 }
 
-.new-message {
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-}
+
 
 
 .new-message .submit {
@@ -378,24 +372,24 @@ svg.progress.visible {
     .input {
         width: 145px;
     }
-}			
+}
 </style>
 
 <div class="container-fluid container-app">
   <div class="row-container">
-        <div class="new-message camera" ng-show="showCamera">
           <div class="chats">
          	  <ul id="chatList"></ul>
          	  <div class="end"></div>
           </div>
          <div id="meatbar">
           <div class="video-wrapper">
+            <div class="new-message camera" ng-show="showCamera">
             <div id="video-preview"></div>
+            </div>
           </div>
           <div class="form-wrapper">
             <form id="add-chat-form" ng-submit="sendMessage($event)" ng-include="'/partials/includes/message_form.html'"></form>
-          </div>  
+          </div>
          </div>
-        </div>     	
      </div>
-</div>     
+</div>

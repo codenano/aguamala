@@ -7,22 +7,22 @@ angular.module('h2o.factories', []).
           $rootScope.uname = uname;
           //console.log($rootScope.heartbeats+':'+$rootScope.state+'@'+uname);
           window.location.href = '/';
-       }; 
+       };
     var logout = function() {
        var log = {
          type: 'signOut',
          uname: $rootScope.uname
          };
-       $rootScope.socket.send(JSON.stringify(log)); 
+       $rootScope.socket.send(JSON.stringify(log));
        $rootScope.isAuthenticated = false;
-       $rootScope.uname = 'alien';       
+       $rootScope.uname = 'alien';
        window.location.href = '/signout';
        };
        return {
          login: login,
          logout: logout
-       };   
-  }). 
+       };
+  }).
   factory('cameraHelper', function ($rootScope, $http) {
     var videoShooter;
     var svg = $(null);
@@ -58,10 +58,10 @@ angular.module('h2o.factories', []).
       }
     };
 
-    var startStream = function () {
+    var startStream = function (cb) {
       GumHelper.startVideoStreaming(function (err, stream, videoElement, width, height) {
         if (err) {
-          console.log(err);
+          cb(err);
           videoShooter = null;
         } else {
 
@@ -96,10 +96,10 @@ angular.module('h2o.factories', []).
       videoShooter = null;
       GumHelper.stopVideoStreaming();
     };
-
     return {
       startScreenshot: startScreenshot,
       startStream: startStream,
+      videoShooter: videoShooter,
       resetStream: resetStream
       };
     }).

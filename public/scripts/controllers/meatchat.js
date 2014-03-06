@@ -4,19 +4,19 @@
     $scope.menuList = document.getElementById('menu_list');
     $scope.load = document.getElementById('loadCont');
     $rootScope.start = true;
-    $rootScope.loading();  
+    $rootScope.loading();
     $scope.canSend = false;
     $scope.roomId = $routeParams.id;
     $scope.CHAR_LIMIT = 250;
     $('#add-chat').prop('readonly', true);
     $scope.canSend = false;
-    $('#add-chat-blocker').removeClass('hidden');	
+    $('#add-chat-blocker').removeClass('hidden');
     $scope.$on('$routeChangeStart', function(event, current, previous, rejection) {
     var log = {
       room: $scope.roomId,
       type: 'leave'
       };
-    $rootScope.socket.send(JSON.stringify(log));	
+    $rootScope.socket.send(JSON.stringify(log));
     });
     $(document).on('keydown', function (event) {
       if (event.target !== $('#add-chat')[0]) {
@@ -32,6 +32,7 @@
        };
     $scope.parseThread = function(msgs, callback) {
       if (msgs.threads.length>0) {
+        msgs.threads.reverse();
         _.each(msgs.threads, function(data){
               var chatList = $('.chats ul');
               var li = document.createElement('li');
@@ -51,7 +52,7 @@
                  ii.className = 'fa fa-ban fa-stack-2x text-danger';
                  pic.appendChild(i);
                  pic.appendChild(ii);
-                 pic.style.position = 'absolute'; 
+                 pic.style.position = 'absolute';
                  pic.style.top = '13px';
                  pic.style.left = '30px';
                  }
@@ -67,10 +68,12 @@
     $scope.promptCamera = function () {
         if (navigator.getMedia) {
           $scope.showCamera = true;
-          cameraHelper.startStream();
+          cameraHelper.startStream(function(err){
+            console.log(err);
+            $scope.showCamera = false;
+          });
         } else {
           $scope.back();
-          
         }
       };
     $scope.recordCamera = function () {
@@ -90,7 +93,7 @@
                     };
                   $rootScope.socket.send(JSON.stringify(msg));
                   }
-             	$('#add-chat').val('');
+             	 $('#add-chat').val('');
                $('#add-chat').prop('readonly', false);
                $scope.canSend = true;
                $('#add-chat-blocker').addClass('hidden');
@@ -100,7 +103,7 @@
     $scope.sendMessage = function (ev) {
         if ($scope.canSend)
            {
-           if (cameraHelper.videoShooter) {   
+           if ($scope.showCamera) {
               $scope.recordCamera();
               }
            else {
@@ -112,9 +115,9 @@
                     fingerprint: $scope.fingerprint,
                     room: $scope.roomId
                     };
-                  $('#add-chat').val('');  
+                  $('#add-chat').val('');
                   $rootScope.socket.send(JSON.stringify(msg));
-              }           
+              }
            }
            else
               {
@@ -136,9 +139,12 @@
                $('#add-chat-blocker').addClass('hidden');
                $rootScope.loading();
                }
-       },100);  
+       },100);
+       $('body').stop().animate({
+            scrollTop: $('body')[0].scrollHeight
+        }, 800);
        $scope.resetForm();
        $scope.promptCamera();
-       });      
+       });
     });
-  });    
+  });
