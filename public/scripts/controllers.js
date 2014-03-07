@@ -135,6 +135,9 @@ angular.module('h2o.controllers', [
       $rootScope.socket.send(JSON.stringify(log));
       },3000);
       };
+    $rootScope.$on('$routeChangeSuccess', function(event, current, previous, rejection) {
+      $rootScope.loadMenu();
+      });
     $rootScope.socket.onmessage = function (event) {
         var data = JSON.parse(event.data);
           if ((data)&&(data.type)){
@@ -183,6 +186,7 @@ angular.module('h2o.controllers', [
                       $('body').stop().animate({
                           scrollTop: $('body')[0].scrollHeight
                       }, 800);
+                      $(li).css({ transform: 'rotate(0deg)'});
                break;
                case 'pong':
                     $rootScope.heartbeats++;

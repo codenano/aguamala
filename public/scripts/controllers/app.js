@@ -6,19 +6,20 @@ angular.module('h2o.app', []).
      $scope.load = document.getElementById('loadCont');
      $scope.load.style.display = 'block';
      $scope.init = function(){
-        console.log('load');   
+        console.log('load');
         };
      $scope.intervalLoad = setInterval(function(){
        if ($rootScope.state === 'start') {
           clearInterval($scope.intervalLoad);
           console.log($rootScope.uname);
-          if ($rootScope.uname === 'alien')   
+          if ($rootScope.uname === 'alien')
              $rootScope.$apply(function(){
                $location.path("/");
              });
-          else 
+          else
              $scope.init();
              $scope.load.style.display = 'none';
+             $('.panel').css({ transform: 'rotate(0deg)'});
           }
-       },100);     
+       },100);
   });
