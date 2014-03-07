@@ -58,6 +58,7 @@
                  }
               li.appendChild(pic);
               chatList.append(li);
+              $(li).css({ transform: 'rotate(0deg)'});
            });
            }
     callback();
