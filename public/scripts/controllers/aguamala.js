@@ -2,7 +2,7 @@
 angular.module('h2o.aguamala', []).
   controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams){
     $scope.load = document.getElementById('loadCont');
-    $rootScope.start = true;
+    $rootScope.start = false;
     $rootScope.loading();
     $scope.validateEmail = function(email, callback) {
        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -200,7 +200,7 @@ angular.module('h2o.aguamala', []).
                        //console.log($location.path());
                      break;
                      }
-      $rootScope.loading();
+      //$rootScope.loading();
       };
     //console.log($rootScope.uname);
      $scope.intervalLoad = setInterval(function(){

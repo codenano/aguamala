@@ -3,23 +3,17 @@ angular.module('h2o.app', []).
   controller('app', function ($rootScope, $scope, $location, $http, $routeParams){
      $scope.module = $routeParams.module;
      $scope.section = $routeParams.section;
-     $scope.load = document.getElementById('loadCont');
-     $scope.load.style.display = 'block';
+     $rootScope.start = false;
+     $rootScope.loading();
      $scope.init = function(){
-        console.log('load');
+        console.log('load start:'+$scope.module);
+        $('.panel').css({ transform: 'rotate(0deg)'});
         };
      $scope.intervalLoad = setInterval(function(){
        if ($rootScope.state === 'start') {
           clearInterval($scope.intervalLoad);
-          console.log($rootScope.uname);
-          if ($rootScope.uname === 'alien')
-             $rootScope.$apply(function(){
-               $location.path("/");
-             });
-          else
-             $scope.init();
-             $scope.load.style.display = 'none';
-             $('.panel').css({ transform: 'rotate(0deg)'});
+          $scope.init();
+          //$rootScope.loading();
           }
        },100);
   });

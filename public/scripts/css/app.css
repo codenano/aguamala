@@ -10,28 +10,6 @@ body {
 .animate-leave {
 
 }
-
-/*.animate-leave.animate-leave-active,
-.animate-enter {
-    -webkit-transform: rotateX(30deg) rotateZ(360deg);
-    -moz-transform: rotateX(30deg) rotateZ(360deg);
-    -ms-transform: rotateX(30deg) rotateZ(360deg);
-    -o-transform: rotateX(30deg) rotateZ(360deg);
-    transform: rotateX(30deg) rotateZ(360deg);
-    opacity: 0;
-    height: 0px;
-}
-
-.animate-enter.animate-enter-active,
-.animate-leave {
-    -webkit-transform: rotateX(0deg) rotateZ(0deg);
-    -moz-transform: rotateX(0deg) rotateZ(0deg);
-    -ms-transform: rotateX(0deg) rotateZ(0deg);
-    -o-transform: rotateX(0deg) rotateZ(0deg);
-    transform: rotateX(0deg) rotateZ(0deg);
-    opacity: 1;
-    height: 30px;
-}*/
 #twtfeed ul{
 width:400px;
 margin:0;
@@ -42,21 +20,12 @@ margin:0;
 }
 .container-app {
 }
-.active {
+/*.active {
 border-bottom:3px solid #00ffff;
 }
 .navbar-default .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
 border-bottom:3px solid #00ffff;
-}
-#app{
--moz-transition: all 1s;
--webkit-transition: all 1s;
--ms-transition: all 1s;
--o-transition: all 1s;
-transition: all 1s;
-
-
-}
+}*/
 #loadCont {
     position:fixed;
   width:100%;
@@ -85,6 +54,11 @@ transition: all 1s;
   right:0;
     position:fixed;
     z-index:1050;
+  -moz-transition: all 1s;
+-webkit-transition: all 1s;
+-ms-transition: all 1s;
+-o-transition: all 1s;
+transition: all 1s;
 }
 #foo{
 border-radius:50px;
@@ -114,7 +88,7 @@ transition: all 1s;
 -ms-transition: all 600ms;
 -o-transition: all 600ms;
 transition: all 600ms;
-margin-top:4em;
+margin-top:6em;
 z-index:1020;
 position:relative;
 background-color:rgba(255,255,255,0.65);
