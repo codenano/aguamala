@@ -137,6 +137,7 @@ angular.module('h2o.controllers', [
       };
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous, rejection) {
       $rootScope.loadMenu();
+      $rootScope.included = 'loading';
       });
     $rootScope.$on('$includeContentLoaded', function(event) {
            console.log('ff');
