@@ -140,9 +140,7 @@ angular.module('h2o.controllers', [
       $rootScope.included = 'loading';
       });
     $rootScope.$on('$includeContentLoaded', function(event) {
-           console.log('ff');
-           //document.getElementById('singin_email').focus();
-          $rootScope.included = 'start';
+      $rootScope.included = 'start';
       });
     $rootScope.socket.onmessage = function (event) {
         var data = JSON.parse(event.data);

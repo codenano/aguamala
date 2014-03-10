@@ -2,8 +2,6 @@
 angular.module('h2o.aguamala', []).
   controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams, $timeout){
     $scope.load = document.getElementById('loadCont');
-    $rootScope.start = false;
-    $rootScope.loading();
     $scope.validateEmail = function(email, callback) {
        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
        callback(re.test(email));
@@ -15,14 +13,12 @@ angular.module('h2o.aguamala', []).
        callback((freebase.length >= 2));
        };
     $scope.initAlien = function(){
+       $rootScope.start = false;
+       $rootScope.loading();
        $('.panel').css({ transform: 'rotate(0deg)'});
        switch($location.path()) {
                      case '/signup':
-                       /*setTimeout(function(){
-                       }, 500);*/
-                       //$timeout(function () {
-                           document.getElementById('singup_email').focus();
-                       //});
+                       document.getElementById('singup_email').focus();
                        $scope.singup_email_v = false;
                        $scope.singup_pssw_v = false;
                        $scope.signUp = function() {
@@ -88,13 +84,7 @@ angular.module('h2o.aguamala', []).
                           };
                      break;
                      case '/signin':
-                       /*$timeout(function () {
-                           document.getElementById('singin_email').focus();
-                           });*/
-                       //$rootScope.$on('$includeContentLoaded', function(event) {
-                            //console.log('ff');
-                            document.getElementById('singin_email').focus();
-                       //});
+                       document.getElementById('singin_email').focus();
                        $scope.singin_email_v = false;
                        $scope.singin_pssw_v = false;
                        $scope.signIn = function() {
@@ -160,16 +150,12 @@ angular.module('h2o.aguamala', []).
                           };
                      break;
                      case '/':
-                       //$('.animate-enter').css({ transform: 'rotate(0deg)'});
-                       //$('.animate-enter').css({ transform: 'rotate(0deg)'});
                        $scope.f = document.getElementById('foo');
                        document.addEventListener('click', function(ev){
                            $scope.f.style.left = (ev.clientX-25)+'px';
                            $scope.f.style.top = (ev.clientY-25)+'px';
                        },false);
-                       //$timeout(function () {
-                           document.getElementById('freebaseInput').focus();
-                       //});
+                       document.getElementById('freebaseInput').focus();
                        $scope.keyFreebase = function() {
                            $scope.singin_pssw_v = false;
                            $scope.singin_pssw = document.getElementById('freebaseInput');
@@ -203,16 +189,13 @@ angular.module('h2o.aguamala', []).
 
                      break;
                      default:
-                       //console.log($location.path());
+                       console.log($location.path());
                      break;
                      }
-      //$rootScope.loading();
       };
-    //console.log($rootScope.uname);
      $scope.intervalLoad = setInterval(function(){
-       if (($rootScope.state == 'start')&&($rootScope.included == 'start')) {
+       if (($rootScope.state === 'start')&&($rootScope.included === 'start')) {
           clearInterval($scope.intervalLoad);
-          console.log($rootScope.uname);
           if (($rootScope.uname === 'alien')||($location.path()=='/'))
              $scope.initAlien();
           else
