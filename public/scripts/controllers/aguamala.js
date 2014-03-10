@@ -18,9 +18,11 @@ angular.module('h2o.aguamala', []).
        $('.panel').css({ transform: 'rotate(0deg)'});
        switch($location.path()) {
                      case '/signup':
-                       setTimeout(function(){
-                         document.getElementById('singup_email').focus();
-                       }, 500);
+                       /*setTimeout(function(){
+                       }, 500);*/
+                       angular.element(document).ready(function () {
+                           document.getElementById('singup_email').focus();
+                       });
                        $scope.singup_email_v = false;
                        $scope.singup_pssw_v = false;
                        $scope.signUp = function() {
@@ -86,9 +88,9 @@ angular.module('h2o.aguamala', []).
                           };
                      break;
                      case '/signin':
-                       setTimeout(function(){
-                         document.getElementById('singin_email').focus();
-                       }, 500);
+                       angular.element(document).ready(function () {
+                           document.getElementById('singin_email').focus();
+                           });
                        $scope.singin_email_v = false;
                        $scope.singin_pssw_v = false;
                        $scope.signIn = function() {
@@ -161,9 +163,9 @@ angular.module('h2o.aguamala', []).
                            $scope.f.style.left = (ev.clientX-25)+'px';
                            $scope.f.style.top = (ev.clientY-25)+'px';
                        },false);
-                       setTimeout(function(){
-                         document.getElementById('freebaseInput').focus();
-                       }, 500);
+                       angular.element(document).ready(function () {
+                           document.getElementById('freebaseInput').focus();
+                           });
                        $scope.keyFreebase = function() {
                            $scope.singin_pssw_v = false;
                            $scope.singin_pssw = document.getElementById('freebaseInput');
