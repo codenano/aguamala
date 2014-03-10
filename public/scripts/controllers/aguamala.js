@@ -1,6 +1,6 @@
 'use strict';
 angular.module('h2o.aguamala', []).
-  controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams){
+  controller('aguamala', function ($rootScope, $scope, $location, $http, $routeParams, $timeout){
     $scope.load = document.getElementById('loadCont');
     $rootScope.start = false;
     $rootScope.loading();
@@ -20,7 +20,7 @@ angular.module('h2o.aguamala', []).
                      case '/signup':
                        /*setTimeout(function(){
                        }, 500);*/
-                       angular.element(document).ready(function () {
+                       $timeout(function () {
                            document.getElementById('singup_email').focus();
                        });
                        $scope.singup_email_v = false;
@@ -88,7 +88,7 @@ angular.module('h2o.aguamala', []).
                           };
                      break;
                      case '/signin':
-                       angular.element(document).ready(function () {
+                       $timeout(function () {
                            document.getElementById('singin_email').focus();
                            });
                        $scope.singin_email_v = false;
@@ -163,7 +163,7 @@ angular.module('h2o.aguamala', []).
                            $scope.f.style.left = (ev.clientX-25)+'px';
                            $scope.f.style.top = (ev.clientY-25)+'px';
                        },false);
-                       angular.element(document).ready(function () {
+                       $timeout(function () {
                            document.getElementById('freebaseInput').focus();
                            });
                        $scope.keyFreebase = function() {
