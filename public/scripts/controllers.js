@@ -138,6 +138,11 @@ angular.module('h2o.controllers', [
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous, rejection) {
       $rootScope.loadMenu();
       });
+    $rootScope.$on('$includeContentLoaded', function(event) {
+           console.log('ff');
+           //document.getElementById('singin_email').focus();
+          $rootScope.included = 'start';
+      });
     $rootScope.socket.onmessage = function (event) {
         var data = JSON.parse(event.data);
           if ((data)&&(data.type)){

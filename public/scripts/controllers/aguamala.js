@@ -20,9 +20,9 @@ angular.module('h2o.aguamala', []).
                      case '/signup':
                        /*setTimeout(function(){
                        }, 500);*/
-                       $timeout(function () {
+                       //$timeout(function () {
                            document.getElementById('singup_email').focus();
-                       });
+                       //});
                        $scope.singup_email_v = false;
                        $scope.singup_pssw_v = false;
                        $scope.signUp = function() {
@@ -88,9 +88,13 @@ angular.module('h2o.aguamala', []).
                           };
                      break;
                      case '/signin':
-                       $timeout(function () {
+                       /*$timeout(function () {
                            document.getElementById('singin_email').focus();
-                           });
+                           });*/
+                       //$rootScope.$on('$includeContentLoaded', function(event) {
+                            //console.log('ff');
+                            document.getElementById('singin_email').focus();
+                       //});
                        $scope.singin_email_v = false;
                        $scope.singin_pssw_v = false;
                        $scope.signIn = function() {
@@ -163,9 +167,9 @@ angular.module('h2o.aguamala', []).
                            $scope.f.style.left = (ev.clientX-25)+'px';
                            $scope.f.style.top = (ev.clientY-25)+'px';
                        },false);
-                       $timeout(function () {
+                       //$timeout(function () {
                            document.getElementById('freebaseInput').focus();
-                           });
+                       //});
                        $scope.keyFreebase = function() {
                            $scope.singin_pssw_v = false;
                            $scope.singin_pssw = document.getElementById('freebaseInput');
@@ -206,7 +210,7 @@ angular.module('h2o.aguamala', []).
       };
     //console.log($rootScope.uname);
      $scope.intervalLoad = setInterval(function(){
-       if ($rootScope.state == 'start') {
+       if (($rootScope.state == 'start')&&($rootScope.included == 'start')) {
           clearInterval($scope.intervalLoad);
           console.log($rootScope.uname);
           if (($rootScope.uname === 'alien')||($location.path()=='/'))

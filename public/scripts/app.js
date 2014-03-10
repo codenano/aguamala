@@ -1,5 +1,5 @@
 'use strict';
-/*  
+/*
     501878200046345148
     console.log('%c dc ', 'background: #222; color: #bada55');
     git config remote.origin.url https://you:password@github.com/you/example.git
@@ -24,6 +24,7 @@ angular.module('h2o', [
 ]).
 run(function ($rootScope, $http, $location) {
   $rootScope.state = 'loading';
+  $rootScope.included = 'loading';
   var host = window.location.hostname;
   $rootScope.app = 'aguamala';
   $rootScope.socket = new WebSocket('ws://' + host);
@@ -41,19 +42,19 @@ config(function ($routeProvider, $locationProvider) {
     .when('/aguamala', {
       controller: 'aguamala',
       templateUrl: 'partials/aguamala.html'
-    })    
+    })
     .when('/signin', {
       controller: 'aguamala',
       templateUrl: 'partials/signin.html'
-    })    
+    })
     .when('/module/slides/section/:section', {
       controller: 'slides',
       templateUrl: 'partials/slides.html'
-    })     
+    })
     .when('/module/dellitours/section/:section', {
       controller: 'dellitours',
       templateUrl: 'partials/dellitours.html'
-    }) 
+    })
     .when('/module/sumito/section/:section', {
       controller: 'sumito',
       templateUrl: 'partials/sumito.html'
@@ -61,15 +62,15 @@ config(function ($routeProvider, $locationProvider) {
     .when('/module/aguamala/section/:section', {
       controller: 'aguamala',
       templateUrl: 'partials/aguamala.html'
-    })    
+    })
     .when('/module/:module/section/:section', {
       controller: 'app',
       templateUrl: 'partials/app.html'
-    }) 
+    })
     .when('/signout', {
       controller: 'app',
       templateUrl: 'partials/app.html'
-    })     
+    })
     .when('/meat/:id', {
       controller: 'meatchat',
       templateUrl: 'partials/meat.html'
