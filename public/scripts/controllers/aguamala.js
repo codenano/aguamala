@@ -13,6 +13,33 @@ angular.module('h2o.aguamala', []).
        callback((freebase.length >= 2));
        };
     $scope.initAlien = function(){
+//$('.all-content').css('display', 'none')
+var bgColor;
+var effect = 'animated bounceInLeft'; /* bounceIn, bounceInUp, bounceInDown, bounceInLeft,
+										 bounceInRight, rotateIn, rotateInUpLeft, rotateInDownLeft,
+										 rotateInUpRight, rotateInDownRight  */
+
+$('.content li').click(function(){
+	$('.card-front, .card-back').css('display', 'none')
+	$('.content li').removeClass('active').css('display', 'none');
+	$(this).addClass('active').css('display', 'block')
+	bgColor = $('.active .card-back').css('background-color');
+	$('.content').css('background-color',bgColor);
+	$('.close, .all-content').css('display', 'block')
+	$('.content').append('<span class="close">close</span>').addClass(effect);
+});
+
+
+$('.content').on('click', '.close', function(){
+
+	$('.close').remove();
+	bgColor = $('.active .card-front').css('background-color');
+	$('.content').removeClass(effect);
+	$('.all-content').css('display', 'none');
+	$('.content li').removeClass('active').css('display', 'block');
+  $('.card-front, .card-back').css('display', 'block')
+	$('.content').css('background-color',bgColor);
+});
        $rootScope.start = false;
        $rootScope.loading();
        $('.panel').css({ transform: 'rotate(0deg)'});
