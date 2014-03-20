@@ -135,7 +135,7 @@ angular.module('h2o.controllers', [
       $rootScope.socket.send(JSON.stringify(log));
       },3000);
       };
-    $rootScope.$on('$routeChangeSuccess', function(event, current, previous, rejection) {
+    $rootScope.$on('$routeChangeStart', function(event, current, previous, rejection) {
       $rootScope.loadMenu();
       $rootScope.included = 'loading';
       });
