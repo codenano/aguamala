@@ -4,6 +4,7 @@ angular.module('h2o.app', []).
      $scope.module = $routeParams.module;
      $scope.section = $routeParams.section;
      $rootScope.start = false;
+     $rootScope.firstLoad = false;
      $rootScope.loading();
      $scope.init = function(){
         console.log('load start:'+$scope.module);

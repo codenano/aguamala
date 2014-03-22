@@ -180,6 +180,8 @@ angular.module('h2o.aguamala', []).
                         $('.card-front, .card-back').css('display', 'block')
                       	$('.content').css('background-color',$scope.bgColor);
                       });
+                      if (!$rootScope.firstLoad) {
+                      $rootScope.firstLoad = true;
                       $scope.canvas = document.getElementById('canvasSample');
                       if ( ! $scope.canvas || ! $scope.canvas.getContext ) { return false; }
                       
@@ -214,6 +216,7 @@ angular.module('h2o.aguamala', []).
                         //$scope.ctx.fillRect ($scope.mouseX, $scope.mouseY, 20,20);
                       });
                     };
+                    }
                     $scope.drawParticles = function(particleList, dotMap, _h, _w) {
                         var x, y;
                         var n = 30;//100/17;
