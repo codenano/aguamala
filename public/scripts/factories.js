@@ -23,7 +23,7 @@ angular.module('h2o.factories', []).
          logout: logout
        };
   }).
-  factory('transformer', function() {
+  factory('transformer', function($rootScope) {
     var meshu = 'gha';
     var drawSquare = function(ctx, img, start_array, len,  a0, a1, a2, a3) {
       function toV(array) {
@@ -45,7 +45,62 @@ angular.module('h2o.factories', []).
       dest = new Triangle(p1.plus(p2).minus(p3), p1, p2);
       drawTriangle(ctx, img, start, len, clipTriangle, dest);
     }
-    
+    var drawParticles = function(particleList, dotMap, _h, _w) {
+                        var x, y;
+                        var n = 30;//100/17;
+                        console.log(meshu);
+                        $rootScope.ctx.clearRect(0, 0, $rootScope.ctx.canvas.width, $rootScope.ctx.canvas.height);
+                        for (y = 0; y < _h-1; y++) {
+                            for (x = 0; x < _w-1; x++) {
+                                if(!dotMap.isDot(x, y)) continue;    // ドットが無いなら描画省略
+                                var start = [x * n, y * n];
+                                drawSquare($rootScope.ctx, $rootScope.imgx, start, n,
+                                                         [particleList[x][y].x,     particleList[x][y].y],
+                                                         [particleList[x+1][y].x,   particleList[x+1][y].y],
+                                                         [particleList[x][y+1].x,   particleList[x][y+1].y],
+                                                         [particleList[x+1][y+1].x, particleList[x+1][y+1].y]);
+                            }
+                        }
+                      };
+    var MapSlime = function() {
+                         this.w = 23;
+                         this.h = 16;
+                         this.map = []; // ピクセルマップ
+                         this.pallet = [0x000000, 0xffffff];
+                         this.strPallet = ["_", "w"];
+                         this.strMap =
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww"+
+                             "wwwwwwwwwwwwwwwwwwwwwww";
+                         for (var i = 0; i < this.w * this.h; i++){
+                             this.map.push(this.strPallet.indexOf(this.strMap.substr(i, 1)));
+                         }
+                         
+                         this.isDot = function(x, y) {
+                             if (x < 0 || y < 0 || this.w <= x || this.h <= y) return false;
+                             if (this.map[x + y * this.w] === 0) return false;
+                             return true;
+                         };
+                         this.getColor = function(x, y) {
+                             if (x < 0 || y < 0 || this.w <= x || this.h <= y) return 0;
+                             return this.pallet[this.map[x + y * this.w]];
+                         };
+                         return this;
+                         };
     function drawTriangle(ctx, img, start, len, clipTriangle, dest) {
       ctx.save();
     
@@ -135,10 +190,10 @@ angular.module('h2o.factories', []).
       var d2 = this.p2.minus(c).normal();
       return new Triangle(this.p0.plus(d0), this.p1.plus(d1), this.p2.plus(d2));
     };
-    
-    
     return {
       drawSquare: drawSquare,
+      drawParticles: drawParticles,
+      MapSlime: MapSlime,
       meshu: meshu
     };
   }).

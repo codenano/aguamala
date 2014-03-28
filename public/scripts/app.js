@@ -3,6 +3,7 @@
     501878200046345148
     console.log('%c dc ', 'background: #222; color: #bada55');
     git config remote.origin.url https://you:password@github.com/you/example.git
+    git config core.fileMode false
     rails generate scaffold name attribute:type
     perl nombrearchivo.pl -dns www.pagina.com
     script(src='/scripts/lib/jquery/jquery.js')

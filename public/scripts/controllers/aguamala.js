@@ -150,11 +150,53 @@ angular.module('h2o.aguamala', []).
                           };
                      break;
                      case '/':
+                      $rootScope.canvas = document.getElementById('canvasSample');
+                      if ( ! $scope.canvas || ! $scope.canvas.getContext ) { return false; }
+                      $rootScope.ctx = $rootScope.canvas.getContext('2d');
+                      $rootScope.imgx = new Image();
+                      $rootScope.imgx.src = '/images/aguamala/aguamala-300.png';
+                      $scope.initPuyo = function() {
+                        $scope.mouseX = 0;
+                        $scope.mouseY = 0;
+                        $rootScope.puyoDotInt = setInterval(function() {
+                          $rootScope.puyoDot.frame($scope.mouseX, $scope.mouseY);
+                        }, 30);
+                        $scope.$on('$routeChangeStart', function(event, current, previous, rejection) {
+                         clearInterval($rootScope.puyoDotInt);
+                        });
+                      };
                       $scope.f = document.getElementById('foo');
-                       document.addEventListener('click', function(ev){
-                           $scope.f.style.left = (ev.clientX-25)+'px';
-                           $scope.f.style.top = (ev.clientY-25)+'px';
-                       },false);
+                       $('#canvasSample').mousedown(function(e) {
+                        $scope.mouseX = e.pageX;
+                        $scope.mouseY = e.pageY;
+                        $scope.f.style.left = $scope.mouseX+'px';
+                        $scope.f.style.top = $scope.mouseY+'px';
+                        $rootScope.puyoDot.startBornDrag($scope.mouseX, $scope.mouseY);
+                       });
+                      $('#canvasSample').mouseup(function(e) {
+                        $rootScope.puyoDot.endBornDrag();
+                      });
+                      $('#canvasSample').mousemove(function(e) {
+                        $scope.mouseX = e.pageX + 8;
+                        $scope.mouseY = e.pageY + 8;
+                        //$scope.ctx.fillRect ($scope.mouseX, $scope.mouseY, 20,20);
+                      });
+                      if (!$rootScope.firstLoad) {
+                        $rootScope.firstLoad = true;
+                        $rootScope.puyoDot = new PuyoDot(window.innerWidth, window.innerHeight);
+                        $rootScope.puyoDot.init(transformer.MapSlime(), transformer.drawParticles);
+                        $scope.initPuyo();
+                        }
+                        else
+                           {
+                            $scope.initPuyo();
+                           }
+                      $scope.resizeCanvas = function() {
+                          $rootScope.canvas.width = window.innerWidth;
+                          $rootScope.canvas.height = window.innerHeight;
+                      };
+                      window.addEventListener('resize', $scope.resizeCanvas, false);
+                      $scope.resizeCanvas();
                       console.log(window.innerWidth);
                       /* bounceIn, bounceInUp, bounceInDown, bounceInLeft,
                       bounceInRight, rotateIn, rotateInUpLeft, rotateInDownLeft,
@@ -162,117 +204,23 @@ angular.module('h2o.aguamala', []).
                       $scope.bgColor;
                       $scope.effect = 'animated bounceInLeft';
                       $('.content li').click(function(){
-                      	$('.card-front, .card-back').css('display', 'none')
-                      	$('.content li').removeClass('activebox').css('display', 'none');
-                      	$(this).addClass('activebox').css('display', 'block')
-                      	$scope.bgColor = $('.activebox .card-back').css('background-color');
-                      	$('.content').css('background-color',$scope.bgColor);
-                      	$('.close, .all-content').css('display', 'block')
-                      	$('.content').append('<span class="close">close</span>').addClass($scope.effect);
+                        $('.card-front, .card-back').css('display', 'none');
+                        $('.content li').removeClass('activebox').css('display', 'none');
+                        $(this).addClass('activebox').css('display', 'block');
+                        $scope.bgColor = $('.activebox .card-back').css('background-color');
+                        $('.content').css('background-color',$scope.bgColor);
+                        $('.close, .all-content').css('display', 'block');
+                        $('.content').append('<span class="close">close</span>').addClass($scope.effect);
                       });
                       $('.content').on('click', '.close', function(){
-                      
-                      	$('.close').remove();
-                      	$scope.bgColor = $('.activebox .card-front').css('background-color');
-                      	$('.content').removeClass($scope.effect);
-                      	$('.all-content').css('display', 'none');
-                      	$('.content li').removeClass('activebox').css('display', 'block');
-                        $('.card-front, .card-back').css('display', 'block')
-                      	$('.content').css('background-color',$scope.bgColor);
+                        $('.close').remove();
+                        $scope.bgColor = $('.activebox .card-front').css('background-color');
+                        $('.content').removeClass($scope.effect);
+                        $('.all-content').css('display', 'none');
+                        $('.content li').removeClass('activebox').css('display', 'block');
+                        $('.card-front, .card-back').css('display', 'block');
+                        $('.content').css('background-color',$scope.bgColor);
                       });
-                      if (!$rootScope.firstLoad) {
-                      $rootScope.firstLoad = true;
-                      $scope.canvas = document.getElementById('canvasSample');
-                      if ( ! $scope.canvas || ! $scope.canvas.getContext ) { return false; }
-                      
-                      $scope.ctx = $scope.canvas.getContext('2d');
-                      $scope.imgx = new Image();
-                      $scope.imgx.src = '/images/aguamala/aguamala-300.png';
-                      window.addEventListener('resize', $scope.resizeCanvas, false);
-                      $scope.resizeCanvas = function() {
-                              $scope.canvas.width = window.innerWidth;
-                              $scope.canvas.height = window.innerHeight;
-                      }
-                      $scope.resizeCanvas();
-                      $scope.imgx.onload = function () {
-                      $scope.puyoDot = new PuyoDot(window.innerWidth, window.innerHeight);
-                      $scope.mouseX = 0;
-                      $scope.mouseY = 0;
-                      $scope.puyoDot.init(new $scope.MapSlime(), $scope.drawParticles);
-                      setInterval(function() {
-                        $scope.puyoDot.frame($scope.mouseX, $scope.mouseY);
-                      }, 30);
-                      $('#canvasSample').mousedown(function(e) {
-                        $scope.mouseX = e.pageX + 8;
-                        $scope.mouseY = e.pageY + 8;
-                        $scope.puyoDot.startBornDrag($scope.mouseX, $scope.mouseY);
-                      });
-                      $('#canvasSample').mouseup(function(e) {
-                        $scope.puyoDot.endBornDrag();
-                      });
-                      $('#canvasSample').mousemove(function(e) {
-                        $scope.mouseX = e.pageX + 8;
-                        $scope.mouseY = e.pageY + 8;
-                        //$scope.ctx.fillRect ($scope.mouseX, $scope.mouseY, 20,20);
-                      });
-                    };
-                    }
-                    $scope.drawParticles = function(particleList, dotMap, _h, _w) {
-                        var x, y;
-                        var n = 30;//100/17;
-                        console.log(transformer.meshu);
-                        $scope.ctx.clearRect(0, 0, $scope.ctx.canvas.width, $scope.ctx.canvas.height);
-                        for (y = 0; y < _h-1; y++) {
-                            for (x = 0; x < _w-1; x++) {
-                                if(!dotMap.isDot(x, y)) continue;    // ドットが無いなら描画省略
-                                var start = [x * n, y * n];
-                                transformer.drawSquare($scope.ctx, $scope.imgx, start, n,
-                                                         [particleList[x][y].x,     particleList[x][y].y],
-                                                         [particleList[x+1][y].x,   particleList[x+1][y].y],
-                                                         [particleList[x][y+1].x,   particleList[x][y+1].y],
-                                                         [particleList[x+1][y+1].x, particleList[x+1][y+1].y]);
-                            }
-                        }
-                      };
-                    $scope.MapSlime = function() {
-                         this.w = 23;
-                         this.h = 16;
-                         this.map = []; // ピクセルマップ
-                         this.pallet = [0x000000, 0xffffff];
-                         this.strPallet = ["_", "w"];
-                         this.strMap =
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww"+
-                             "wwwwwwwwwwwwwwwwwwwwwww";
-                         for (var i = 0; i < this.w * this.h; i++){
-                             this.map.push(this.strPallet.indexOf(this.strMap.substr(i, 1)));
-                         }
-                         
-                         this.isDot = function(x, y) {
-                             if (x < 0 || y < 0 || this.w <= x || this.h <= y) return false;
-                             if (this.map[x + y * this.w] === 0) return false;
-                             return true;
-                         };
-                         this.getColor = function(x, y) {
-                             if (x < 0 || y < 0 || this.w <= x || this.h <= y) return 0;
-                             return this.pallet[this.map[x + y * this.w]];
-                         };
-                         return this;
-                         };
                        document.getElementById('freebaseInput').focus();
                        $scope.keyFreebase = function() {
                            $scope.singin_pssw_v = false;

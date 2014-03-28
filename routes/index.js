@@ -14,9 +14,10 @@ module.exports = function (app, h2o) {
   app.get('/signout', h2o.isLoggedIn, function (req, res) {
     req.session.uname = 'alien';
     res.redirect('/');
-  });  
+  });
   app.get('/signin', h2o.isLoggedIn, function (req, res) {
-    if (req.session.uname == 'alien')
+    console.log(req.session.uname);
+    if (req.session.uname === 'alien')
        res.render('app');
     else
        res.redirect('/');
@@ -26,13 +27,13 @@ module.exports = function (app, h2o) {
        res.render('app');
     else
        res.redirect('/');
-  });    
+  });
   app.get('/module/:module/section/:section', h2o.isLoggedIn, function (req, res) {
     if (req.session.uname == 'alien')
        res.redirect('/');
     else
        res.render('app');
-  });  
+  });
   app.get('/meat/:id', h2o.isLoggedIn, function (req, res) {
       res.render('app');
   });
